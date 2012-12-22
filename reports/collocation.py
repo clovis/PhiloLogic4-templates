@@ -26,7 +26,7 @@ def collocation(environ,start_response):
     return render_template(results=hits,db=db,dbname=dbname,q=q,fetch_collocation=fetch_collocation,link=link_to_concordance,
                            f=f,path=path, results_per_page=q['results_per_page'], template_name='collocation.mako')
 
-def fetch_collocation(results, path, q, filter_words=100):
+def fetch_collocation(results, path, q, filter_words=100, full_report=True):
     within_x_words = q['word_num']    
     
     ## set up filtering of most frequent 100 terms ##
@@ -82,8 +82,11 @@ def fetch_collocation(results, path, q, filter_words=100):
     right_out = sorted(right_collocates.items(), key=lambda x: x[1], reverse=True)[:100]
     all_out = sorted(all_collocates.items(), key=lambda x: x[1], reverse=True)[:100]
 
-    tuple_out = zip(all_out, left_out, right_out)
-    return tuple_out
+    if full_report:
+        tuple_out = zip(all_out, left_out, right_out)
+        return tuple_out
+    else:
+        return all_out
 
 def tokenize(text, filter_list, within_x_words, direction, highlighting=False):
     text = clean_text(text, collocation=True)

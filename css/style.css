@@ -322,6 +322,9 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
 .bibliography {
         padding-bottom: 10px;
 }
+
+
+/*All the sidebar classes*/
 a.hide_frequency {
         float: right;
         padding-right: 20px;
@@ -332,7 +335,7 @@ a.hide_frequency:hover {
         text-decoration: none;
         color: Black;
 }
-.frequency_display {
+.sidebar_display {
         float: right;
         padding-right: 20px;
         margin-top: -40px;
@@ -340,6 +343,9 @@ a.hide_frequency:hover {
 .frequency_table {
         padding-top: 10px;
 }
+
+
+
 .score {
         color: Black;
         float: right;

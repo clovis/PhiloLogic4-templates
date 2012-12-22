@@ -1,7 +1,7 @@
 from concordance import concordance
 from frequency import frequency, generate_frequency
 from kwic import kwic
-from collocation import collocation
+from collocation import collocation, fetch_collocation, link_to_concordance
 from relevance import relevance
 from theme_rheme import theme_rheme
 from form import form
