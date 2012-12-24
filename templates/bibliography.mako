@@ -1,41 +1,18 @@
 <%include file="header.mako"/>
+<a href="javascript:void(0)" class="show_search_form">Show search form</a>
 <%include file="search_boxes.mako"/>
 <script>
-$(document).ready(function(){
-    $(".form_body").show();
-    var content_width = 100 + $(".form_body").width() + $(".bibliography_results").width();
-    if ($(window).width() > content_width) {
-        float_left();
+$(document).ready(function() {
+    $("#form").submit(function() {
+        $(".form_body").slideUp()
+        $(this).fadeOut(100).empty().append('Show search form').fadeIn(100)
+        $("#form").submit();
     }
-    else {
-        float_below();
-    }
-    $(window).resize(function() {
-        if ($(window).width() > content_width) {
-            float_left();
-        }
-        else {
-            float_below();
-        }
-    });
 });
-
-function float_left() {
-    $(".form_body").css('float', 'left');
-    $(".results_container").css('float', 'left');
-    $('.description').fadeIn();
-    $(".bibliographic_results").fadeIn();
-}
-function float_below() {
-    $(".results_container").css('float', 'none');
-    $(".form_body").css('float', 'none');
-    $('.description').show();
-    $(".bibliographic_results").show();
-}
 </script>
 <div class="results_container">
 <div class='philologic_response'>
- <p class='description' style="display:none;">Bibliography Report: ${len(results)} results.</p>
+ <p class='description'>Bibliography Report: ${len(results)} results.</p>
  <div class='bibliographic_results'>
  <ol class='philologic_cite_list'>
  % for i in results:

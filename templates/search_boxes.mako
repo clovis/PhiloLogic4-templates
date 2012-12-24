@@ -1,8 +1,8 @@
 <div class='form_body'>
-<form action="${db.locals['db_url'] + "/dispatcher.py/"}">
+<form id="search" action="${db.locals['db_url'] + "/dispatcher.py/"}">
 <table>
- <tr><td>Query Terms:</td><td><input type='text' name='q' id='q'></input></td></tr>
- <tr><td><select name='method' id='method'>
+ <tr><td class="search_table">Query Terms:</td><td><input type='text' name='q' id='q'></input></td></tr>
+ <tr><td class="search_table"><select name='method' id='method'>
  <option value='proxy'>Within x words</option>
  <option value='phrase'>Exactly x words</option>
  <option value='sentence'>Within x sentences</option>

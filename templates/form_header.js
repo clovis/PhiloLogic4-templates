@@ -31,20 +31,6 @@ function autocomplete_metadata(metadata, field) {
 
 var fields = ${repr(db.locals['metadata_fields'])}
 
-
-// These functions are for the kwic bibliography which is shortened by default
-function showBiblio() {
-    $(this).css('background', 'LightGray')
-    $(this).children("#full_biblio").css('position', 'absolute').css('text-decoration', 'underline')
-    $(this).children("#full_biblio").css('background', 'LightGray')
-    $(this).children("#full_biblio").css('display', 'inline')
-}
-
-function hideBiblio() {
-    $(this).css('background', 'white')
-    $(this).children("#full_biblio").hide(200)
-}
-
 $(document).ready(function(){
     
     $(".show_search_form").click(function() {
@@ -118,17 +104,6 @@ $(document).ready(function(){
     };
     $(".kwic_biblio").hoverIntent(config)
 
-    
-// This will show more context for concordance and theme-rheme searches
-/*    $(".philologic_occurrence").hover(
-        function() {
-            $(this).children(".more_context").fadeIn(100);
-        },
-        function() {
-            $(this).children(".more_context").fadeOut(100);
-        }
-	);
-*/
     $(".more_context").click(function() {
         var context_link = $(this).text();
         if (context_link == 'More') {
@@ -185,6 +160,17 @@ $(document).ready(function(){
         showHide('concordance');
     });
     
+//    This will display the sidebar for various frequency reports
+    $("#toggle_frequency").click(function() {
+        toggle_frequency();
+    });
+    $("#frequency_field").change(function() {
+        toggle_frequency();
+    });
+    $(".hide_frequency").click(function() {
+        hide_frequency();
+    });
+    
 });
 
 function showHide(value) {
@@ -212,6 +198,58 @@ function showHide(value) {
         $("#theme_rheme").show()
         $("#results_per_page").show()
     }
+}
+
+// These functions are for the kwic bibliography which is shortened by default
+function showBiblio() {
+    $(this).css('background', 'LightGray')
+    $(this).children("#full_biblio").css('position', 'absolute').css('text-decoration', 'underline')
+    $(this).children("#full_biblio").css('background', 'LightGray')
+    $(this).children("#full_biblio").css('display', 'inline')
+}
+
+function hideBiblio() {
+    $(this).css('background', 'white')
+    $(this).children("#full_biblio").hide(200)
+}
+
+//    These functions are for the sidebar frequencies
+function toggle_frequency() {
+    var field = $("#frequency_field").val();
+    if (field != 'collocate') {
+        var script_call = "${db.locals['db_url']}/scripts/get_frequency.py?frequency_field=" + field + '&${q['q_string']}'
+    } else {
+        var script_call = "${db.locals['db_url']}/scripts/get_collocate.py?${q['q_string']}"
+    }
+    $(".loading").empty().hide();
+    var spinner = '<img src="${db.locals['db_url']}/js/spinner-round.gif" alt="Loading..." />';
+    if ($("#toggle_frequency").hasClass('show_frequency')) {
+        $(".results_container").animate({
+            "margin-right": "330px"},
+            50);
+        $("#freq").empty();
+        $(".loading").append(spinner).show();
+        $.getJSON(script_call, function(data) {
+            $(".loading").hide().empty();
+            $.each(data, function(index, item) {
+                if (item[0].length > 30) {
+                    var url = '<a href="' + item[2] + '">' + item[0].slice(0,30) + '[...]</a>'
+                } else {
+                    var url = '<a href="' + item[2] + '">' + item[0] + '</a>'
+                } 
+                $("#freq").append('<p><li>' + url + '<span style="float:right;padding-right:20px;">' + item[1] + '</span></li></p>');
+            });
+        });
+        $(".hide_frequency").show();
+        $("#freq").show();
+    }
+}
+function hide_frequency() {
+    $(".hide_frequency").fadeOut();
+    $("#freq").hide();
+    $(".results_container").animate({
+        "margin-right": "0px"},
+        50);
 }
 
 </script>
