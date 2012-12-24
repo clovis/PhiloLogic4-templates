@@ -33,6 +33,10 @@ var fields = ${repr(db.locals['metadata_fields'])}
 
 $(document).ready(function(){
     
+    var pathname = window.location.pathname.replace('dispatcher.py/', '');
+    var db_path = window.location.hostname + pathname;
+    var q_string = window.location.search.substr(1);
+    
     $(".show_search_form").click(function() {
         link = $(this).text()
         if (link == 'Show search form') {
@@ -119,9 +123,6 @@ $(document).ready(function(){
     });
     
 //  This will prefill the search form with the current query
-    var url = $(location).attr('href');
-    var db_url = "${db.locals['db_url']}" + '/dispatcher.py/?';
-    var q_string = url.replace(db_url, '');
     var val_list = q_string.split('&');
     for (var i = 0; i < val_list.length; i++) {
         var key_value = val_list[i].split('=');
@@ -162,10 +163,10 @@ $(document).ready(function(){
     
 //    This will display the sidebar for various frequency reports
     $("#toggle_frequency").click(function() {
-        toggle_frequency();
+        toggle_frequency(q_string, db_path, pathname);
     });
     $("#frequency_field").change(function() {
-        toggle_frequency();
+        toggle_frequency(q_string, db_path, pathname);
     });
     $(".hide_frequency").click(function() {
         hide_frequency();
@@ -214,15 +215,15 @@ function hideBiblio() {
 }
 
 //    These functions are for the sidebar frequencies
-function toggle_frequency() {
-    var field = $("#frequency_field").val();
+function toggle_frequency(q_string, db_url, pathname) {
+    var field =  $("#frequency_field").val();
     if (field != 'collocate') {
-        var script_call = "${db.locals['db_url']}/scripts/get_frequency.py?frequency_field=" + field + '&${q['q_string']}'
+        var script_call = "http://" + db_url + "scripts/get_frequency.py?" + q_string + "&frequency_field=" + field;
     } else {
-        var script_call = "${db.locals['db_url']}/scripts/get_collocate.py?${q['q_string']}"
+        var script_call = "http://" + db_url + "scripts/get_collocate.py?" + q_string
     }
     $(".loading").empty().hide();
-    var spinner = '<img src="${db.locals['db_url']}/js/spinner-round.gif" alt="Loading..." />';
+    var spinner = '<img src="http://' + db_url + '/js/spinner-round.gif" alt="Loading..." />';
     if ($("#toggle_frequency").hasClass('show_frequency')) {
         $(".results_container").animate({
             "margin-right": "330px"},
