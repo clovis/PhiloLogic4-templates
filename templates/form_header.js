@@ -94,6 +94,7 @@ $(document).ready(function(){
     };
     $(".kwic_biblio").hoverIntent(config)
 
+//  This will show more context in concordance searches
     $(".more_context").click(function() {
         var context_link = $(this).text();
         if (context_link == 'More') {
@@ -141,9 +142,9 @@ $(document).ready(function(){
             var field = $("#" + i);
             $(field).empty();
         }
-        $("input[name='method'][value='proxy']").attr('checked', true);
-        $("input[name='report'][value='concordance']").attr('checked', true);
-        $("input[name='pagenum'][value='20']").attr('checked', true);
+        $("#method1").attr('checked', true).button("refresh");
+        $("#report1").attr('checked', true).button("refresh");
+        $("#pagenum1").attr('checked', true).button("refresh");
         showHide('concordance');
     });
     
@@ -169,7 +170,7 @@ $(document).ready(function(){
         hide_frequency();
     });
     
-//  QueryUI theming
+//  jQueryUI theming
     $( "#button" )
             .button()
             .click(function( event ) {

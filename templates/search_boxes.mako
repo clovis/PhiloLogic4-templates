@@ -1,7 +1,9 @@
 <div class='form_body'>
 <form id="search" action="${db.locals['db_url'] + "/dispatcher.py/"}">
 <table id="first_table">
- <tr class="table_row" ><td class="first_column">Query Terms:</td><td class="second_column"><input type='text' name='q' id='q' class="search_box"></input></td>
+ <tr class="table_row" ><td class="first_column">Query Terms:</td><td class="second_column"><input type='text' name='q' id='q' class="search_box"></input>
+ </td></tr>
+ <tr><td></td>
  <td><span id='method'>
  <input type="radio" name="method" id="method1" value='proxy' checked="checked"><label for="method1">Within</label>
  <input type='text' name='arg' id='arg1' style="margin-left:15px !important;width:30px; text-align: center;"></input>
