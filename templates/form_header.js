@@ -114,15 +114,19 @@ $(document).ready(function(){
     for (var i = 0; i < val_list.length; i++) {
         var key_value = val_list[i].split('=');
         var my_value = decodeURIComponent((key_value[1]+'').replace(/\+/g, '%20'));
-        var key = $('#' + key_value[0]);
-        if (key_value[0] == 'pagenum' || key_value[0] == 'report' || key_value[0] == 'field' || key_value[0] == 'word_num') {
-            $('input[name=' + key_value[0] + '][value=' + my_value + ']').attr("checked", true);
-        }
-        else if (my_value == 'relative') {
-            key.prop('checked', true);
-        }
-        else {
-            key.val(my_value);
+        if (my_value) {
+            if (key_value[0] == 'pagenum' || key_value[0] == 'report' || key_value[0] == 'field' || key_value[0] == 'word_num' || key_value[0] == 'method') {
+                $('input[name=' + key_value[0] + '][value=' + my_value + ']').attr("checked", true);
+            }
+            else if (my_value == 'relative') {
+                $('#' + key_value[0]).attr('checked', true);
+            }
+            else if (key_value[0] == 'arg') {
+                $('input[name="arg"]').val(my_value)
+            }
+            else {
+                $('#' + key_value[0]).val(my_value);
+            }
         }
     }
     
