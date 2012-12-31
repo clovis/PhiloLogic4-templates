@@ -1,60 +1,63 @@
 <div class='form_body'>
 <form id="search" action="${db.locals['db_url'] + "/dispatcher.py/"}">
+<table id="first_table">
+ <tr class="table_row" ><td class="first_column">Query Terms:</td><td class="second_column"><input type='text' name='q' id='q' class="search_box"></input></td>
+ <td><span id='method'>
+ <input type="radio" name="method" id="method1" value='proxy' checked="checked"><label for="method1">Within</label>
+ <input type='text' name='arg' id='arg1' style="margin-left:15px !important;width:30px; text-align: center;"></input>
+ <span style="padding-left:5px;">words</span>
+ <br><input type="radio" name="method" id="method2" value='phrase'><label for="method2">Exactly</label>
+ <input type='text' name='arg' id='arg2' style="margin-left:11px !important;width:30px; text-align: center;"></input>
+ <span style="padding-left:5px;">words</span>
+ <br><input type="radio" name="method" id="method3" value='sentence'><label for="method3">Within</label>
+ <input type='text' name='arg' id='arg3' style="margin-left:15px !important;width:30px; text-align: center;"></input>
+ <span style="padding-left:5px;">sentences</span>
+ </span></td></tr>
+% for facet in db.locals["metadata_fields"]:
+    <tr class="table_row"><td class="first_column">${facet}:</td><td><input type='text' name='${facet}' id="${facet}" class="search_box"></input></td></tr>
+% endfor
+ </table>
 <table>
- <tr><td class="search_table">Query Terms:</td><td><input type='text' name='q' id='q'></input></td></tr>
- <tr><td class="search_table"><select name='method' id='method'>
- <option value='proxy'>Within x words</option>
- <option value='phrase'>Exactly x words</option>
- <option value='sentence'>Within x sentences</option>
- </select></td><td>
- <input type='text' name='arg' id='arg'></input></td></tr>
+ <tr class="table_row"><td>Search Report:</td><td><span id="report">
+ <input type="radio" name="report" id="report1" value='concordance' checked="checked"><label for="report1">Concordance</label>
+ <input type="radio" name="report" id="report2" value='relevance'><label for="report2">Ranked relevance</label>
+ <input type="radio" name="report" id="report3" value='kwic'><label for="report3">KWIC</label>
+ <input type="radio" name="report" id="report4" value='collocation'><label for="report4">Collocation</label>
+ <input type="radio" name="report" id="report5" value='frequency'><label for="report5">Frequency Table</label>
+ </span></td></tr>
  
-% for facet in db.locals["metadata_fields"]:
-    <tr><td class="search_table">${facet}:</td class="search_table"><td class="search_table"><input type='text' name='${facet}' id="${facet}"></input></td class="search_table"></tr>
+ <tr class="table_row" id="collocation"><td class="first_column">Within </td><td><span id='word_num'>
+ <input type="radio" name="word_num" id="wordnum1" value="1"><label for="wordnum1">1</label>
+ <input type="radio" name="word_num" id="wordnum2" value="2"><label for="wordnum2">2</label>
+ <input type="radio" name="word_num" id="wordnum3" value="3"><label for="wordnum3">3</label>
+ <input type="radio" name="word_num" id="wordnum4" value="4"><label for="wordnum4">4</label>
+ <input type="radio" name="word_num" id="wordnum5" value="5" checked="checked"><label for="wordnum5">5</label>
+ <input type="radio" name="word_num" id="wordnum6" value='6'><label for="wordnum6">6</label>
+ <input type="radio" name="word_num" id="wordnum7" value='7'><label for="wordnum7">7</label>
+ <input type="radio" name="word_num" id="wordnum8" value='8'><label for="wordnum8">8</label>
+ <input type="radio" name="word_num" id="wordnum9" value="9"><label for="wordnum9">9</label>
+ <input type="radio" name="word_num" id="wordnum10" value="10"><label for="wordnum10">10</label>
+ </span> words</td></tr>
+ 
+ <tr class="table_row" id="frequency"><td class="first_column">Frequency by:</td><td><span id='field'>
+% for pos, facet in enumerate(db.locals["metadata_fields"]):
+    % if pos == 0:
+        <input type="radio" name="field" id="field${pos}" value='${facet}' checked='checked'><label for="field${pos}">${facet}</label>
+    % else:
+        <input type="radio" name="field" id="field${pos}" value='${facet}'><label for="field${pos}">${facet}</label>
+    % endif
 % endfor
+</span>
+<input type="checkbox" name="rate" id="rate" value="relative"/>per 10,000
+</td></tr>
 
- <tr><td class="search_table">Report Generator:</td class="search_table"><td class="search_table"><select name='report' id="report">
- <option value='concordance' selected="selected">Concordance</option>
- <option value='relevance'>Ranked relevance</option>
- <option value='kwic'>KWIC</option>
- <option value='collocation'>Collocation</option>
- <option value='frequency'>Frequency Table</option>
- </select></td class="search_table"></tr>
- 
- <tr id="collocation"><td class="search_table">Within </td class="search_table"><td class="search_table"><select name='word_num' id='word_num'>
- <option value='1'>1</option>
- <option value='2'>2</option>
- <option value='3'>3</option>
- <option value='4'>4</option>
- <option value='5' selected="selected">5</option>
- <option value='6'>6</option>
- <option value='7'>7</option>
- <option value='8'>8</option>
- <option value='9'>9</option>
- <option value='10'>10</option>
- </select> words</td class="search_table"></tr>
- 
- <tr id="frequency"><td class="search_table">Frequency by:</td class="search_table"><td class="search_table"><select name='field' id='field'>
-% for facet in db.locals["metadata_fields"]:
-    <option value='${facet}'>${facet}</option>
-% endfor
-<input type="checkbox" name="rate" id="rate" value="relative"/>per 10,000</input>
-</td class="search_table"></tr>
-
-<tr id="theme_rheme"><td class="search_table">Word position:</td class="search_table"><td class="search_table"><select name='theme_rheme'>
-<option value="front">Front of clause</option>
-<option value="end">End of clause</option>
-<option value="front_end">Front and end only</option>
-<option value="front_middle_end">Front, middle and end</option>
-<option value="full">Full report</option>
-</select></td class="search_table"></tr>
-
-<tr id="results_per_page"><td class="search_table">Results per page:</td class="search_table"><td class="search_table"><select name='results_per_page'n id='page_num'>
- <option value='20'>20</option>
- <option value='50'>50</option>
- <option value='100'>100</option></select></td class="search_table"></tr>
- <tr><td class="search_table"><input type='submit'/></td class="search_table">
- <td class="search_table"><button type="reset" id="reset">Clear form</button></td class="search_table"></tr>
+<tr class="table_row" id="results_per_page"><td class="first_column">Results per page:</td><td><span id='page_num'>
+ <input type="radio" name="pagenum" id="pagenum1" value='20' checked="checked"><label for="pagenum1">20</label>
+ <input type="radio" name="pagenum" id="pagenum2" value='50'><label for="pagenum2">50</label>
+ <input type="radio" name="pagenum" id="pagenum3" value='100'><label for="pagenum3">100</label>
+ </span></td></tr>
+ <tr class="table_row"><td class="first_column"><input id="button" type='submit'/></td>
+ <td><button type="reset" id="reset">Clear form</button></td></tr>
 </table>
 </form>
 </div>

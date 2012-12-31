@@ -108,6 +108,7 @@ html, body {
 a:link, a:visited {
   color: #800000;
   text-decoration: none;
+  font-weight: 600;
 }
 a:hover {
   color: #800000;
@@ -120,17 +121,25 @@ a.active, a:link.active, a:visited.active, a:hover.active {
 
 /* Fonts */
 body {
-  font:0.9em/1.2em gill sans,lucida grande,helvetica,arial,clean,sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  /*font-family: 'Source Sans Pro', sans-serif;*/
 }
+
+.main_body{
+    font-weight:400;
+    font-size: 12px;
+}
+
 table {
   font-size:inherit;
   font:100%;
+  font-weight: inherit;
 }
 
-select, input, textarea {
-  font:0.9em gill sans,helvetica,arial,clean,sans-serif;
-  color: #1F1F1F;
+.site-name {
+    font-weight: 400 !important;
 }
+
 body {
   background: ;
   color: #333;
@@ -145,10 +154,11 @@ h1 {
   line-height: 1.2em;
 }
 
+
 /* Tables */
-table {
-  width: 100%;
-}
+/*table {*/
+/*  width: 100%;*/
+/*}*/
 /*tr, td {
   padding-bottom: 15px;
 }*/
@@ -239,7 +249,7 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
 /* New Philo4 styles */
 .form_body {
     padding-top: 10px;
-    width: 500px;
+    width: 960px;
     display: none;
 }
 .kwic_concordance {
@@ -263,8 +273,14 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
 .philologic_collocation {
     padding-right: 50px;
 }
-.search_table {
-    padding-bottom: 15px;
+.table_row {
+    height: 50px !important;
+}
+.first_column {
+    width: 175px;
+}
+.second_column {
+    width: 210px;
 }
 .philologic_table {
     border-collapse:collapse;
@@ -288,7 +304,6 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
 }
 .bibliographic_results {
         list-style-type: none;
-        display: none;
 }
 .description {
         font-size: 180%;
@@ -358,11 +373,29 @@ a.hide_frequency:hover {
 .more_context {
     padding-left: 24px;
     color: Gray !important;
-    font-weight: 300;
+    font-weight: 300 !important;
 }
 .collocate {
     color:ForestGreen;
 }
 .current_page {
     font-size: 170%;
+}
+
+.ui-button,  .ui-button-text .ui-button {  
+    font-size: inherit !important;
+    font-family: inherit !important;
+}
+
+ul.ui-autocomplete.ui-menu {  
+    font-size: inherit !important;
+    font-family: inherit !important;
+}
+
+.search_box {
+    width: 200px;
+}
+
+.show_search_form {
+    font-size: 140%;
 }

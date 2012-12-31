@@ -1,10 +1,6 @@
 <script type="text/javascript">
 function monkeyPatchAutocomplete() {
     //taken from http://stackoverflow.com/questions/2435964/jqueryui-how-can-i-custom-format-the-autocomplete-plug-in-results    
-    
-    // don't really need this, but in case I did, I could store it and chain
-    var oldFn = $.ui.autocomplete.prototype._renderItem;
-
     $.ui.autocomplete.prototype._renderItem = function( ul, item) {
         // This regex took some fiddling but should match beginning of string and
         // any match preceded by a string: this is useful for sql matches.
@@ -31,6 +27,7 @@ function autocomplete_metadata(metadata, field) {
 
 var fields = ${repr(db.locals['metadata_fields'])}
 
+
 $(document).ready(function(){
     
     var pathname = window.location.pathname.replace('dispatcher.py/', '');
@@ -41,11 +38,11 @@ $(document).ready(function(){
         link = $(this).text()
         if (link == 'Show search form') {
             $(".form_body").slideDown()
-            $(this).fadeOut(100).empty().append('Hide search form').fadeIn(100)
+            $(this).hide().empty().append('Hide search form').fadeIn()
         }
         else {
             $(".form_body").slideUp()
-            $(this).fadeOut(100).empty().append('Show search form').fadeIn(100)
+            $(this).hide().empty().append('Show search form').fadeIn()
         }
     });
     
@@ -62,44 +59,33 @@ $(document).ready(function(){
         autocomplete_metadata(metadata, field)
     }
 //    The following is to display the right options when using the back button
-    if ($("#report option[value='concordance']").attr('selected')) {
+    if ($("#report option[value='concordance']").attr('checked')) {
         $("#frequency").hide()
         $("#collocation").hide()
-        $("#theme_rheme").hide()
         $("#results_per_page").show()
     }
-    if ($("#report option[value='kwic']").attr('selected')) {
+    if ($("#report option[value='kwic']").attr('checked')) {
         $("#frequency").hide()
         $("#collocation").hide()
-        $("#theme_rheme").hide()
         $("#results_per_page").show()
     }
-    if ($("#report option[value='collocation']").attr('selected')) {
+    if ($("#report option[value='collocation']").attr('checked')) {
         $("#frequency").hide()
         $("#results_per_page").hide()
-        $("#theme_rheme").hide()
         $("#collocation").show()
     }
-    if ($("#report option[value='frequency']").attr('selected')) {
+    if ($("#report option[value='frequency']").attr('checked')) {
         $("#collocation").hide()
         $("#results_per_page").hide()
-        $("#theme_rheme").hide()
         $("#frequency").show()
     }
-    if ($("#report option[value='relevance']").attr('selected')) {
+    if ($("#report option[value='relevance']").attr('checked')) {
         $("#frequency").hide()
         $("#collocation").hide()
-        $("#theme_rheme").hide()
-        $("#results_per_page").show()
-    }
-    if ($("#report option[value='theme_rheme']").attr('selected')) {
-        $("#frequency").hide()
-        $("#collocation").hide()
-        $("#theme_rheme").show()
         $("#results_per_page").show()
     }
     
-//  This is for displaying the full bibliogrpahy on mouse hover
+//  This is for displaying the full bibliography on mouse hover
 //  in kwic reports
     var config = {    
         over: showBiblio, 
@@ -128,8 +114,8 @@ $(document).ready(function(){
         var key_value = val_list[i].split('=');
         var my_value = decodeURIComponent((key_value[1]+'').replace(/\+/g, '%20'));
         var key = $('#' + key_value[0]);
-        if (key_value[0] == 'results_per_page') {
-            $("#page_num").val(my_value);
+        if (key_value[0] == 'pagenum' || key_value[0] == 'report' || key_value[0] == 'field' || key_value[0] == 'word_num') {
+            $('input[name=' + key_value[0] + '][value=' + my_value + ']').attr("checked", true);
         }
         else if (my_value == 'relative') {
             key.prop('checked', true);
@@ -139,10 +125,10 @@ $(document).ready(function(){
         }
     }
     
-    showHide($("#report").val());
+    showHide($('input[name=report]:checked', '#search').val());
     
     $('#report').change(function() {
-        var report = $(this).val();
+        var report = $('input[name=report]:checked', '#search').val();
         showHide(report);
     });
     
@@ -150,15 +136,26 @@ $(document).ready(function(){
 //  Clear search form
     $("#reset").click(function() {
         $("#q").empty();
-        $("#method").val("proxy");
         $("#arg").empty();
         for (i in fields) {
             var field = $("#" + i);
             $(field).empty();
         }
-        $("#report").val('concordance');
-        $("#results_per_page").val("20");
+        $("input[name='method'][value='proxy']").attr('checked', true);
+        $("input[name='report'][value='concordance']").attr('checked', true);
+        $("input[name='pagenum'][value='20']").attr('checked', true);
         showHide('concordance');
+    });
+    
+//  This is to select the right option when clicking on the input box  
+    $("#arg1").focus(function() {
+        $("#method1").attr('checked', true).button("refresh");
+    });
+    $("#arg2").focus(function() {
+        $("#method2").attr('checked', true).button("refresh");
+    });
+    $("#arg3").focus(function() {
+        $("#method3").attr('checked', true).button("refresh");
     });
     
 //    This will display the sidebar for various frequency reports
@@ -172,32 +169,40 @@ $(document).ready(function(){
         hide_frequency();
     });
     
+//  QueryUI theming
+    $( "#button" )
+            .button()
+            .click(function( event ) {
+                $(".form_body").slideUp();
+                $(".show_search_form").hide().empty().append('Show search form').fadeIn(100)
+            });
+    $("#reset").button();
+    $("#report, #page_num, #word_num, #field, #method").buttonset()
+    
 });
 
 function showHide(value) {
     if (value == 'frequency') {
         $("#collocation").hide()
         $("#results_per_page").hide()
-        $("#theme_rheme").hide()
-        $("#frequency").show()
+        $("#frequency, #method").fadeIn('fast')
     }
     if (value == 'collocation') {
         $("#frequency").hide()
         $("#results_per_page").hide()
-        $("#theme_rheme").hide()
-        $("#collocation").show()
+        $("#method").fadeOut('fast')
+        $("#collocation").fadeIn('fast')
     }
-    if (value == 'concordance' || value == 'kwic' || value == 'relevance') {
+    if (value == 'concordance' || value == 'kwic') {
         $("#frequency").hide()
         $("#collocation").hide()
-        $("#theme_rheme").hide()
-        $("#results_per_page").show()
+        $("#results_per_page, #method").fadeIn('fast')
     }
-    if (value == 'theme_rheme') {
+    if (value == 'relevance') {
         $("#frequency").hide()
         $("#collocation").hide()
-        $("#theme_rheme").show()
-        $("#results_per_page").show()
+        $("#method").fadeOut('fast')
+        $("#results_per_page").fadeIn('fast')
     }
 }
 
