@@ -34,17 +34,17 @@ $(document).ready(function(){
     var db_path = window.location.hostname + pathname;
     var q_string = window.location.search.substr(1);
     
+    
+    $(".show_search_form").tooltip({ position: { my: "left+10 center", at: "right" } });
     $(".show_search_form").click(function() {
         link = $(this).text()
-        if (link == 'Show search form') {
-            $(".form_body").slideDown()
-            $(this).hide().empty().append('Hide search form').fadeIn()
-        }
-        else {
-            $(".form_body").slideUp()
-            $(this).hide().empty().append('Show search form').fadeIn()
-        }
+        $(".close_search_box").toggle()
+        $(".form_body").slideToggle()
     });
+    $(".close_search_box").click(function(){
+        $(this).toggle()
+        $(".form_body").slideToggle()
+    })
     
     monkeyPatchAutocomplete();    
     
@@ -179,7 +179,6 @@ $(document).ready(function(){
             .button()
             .click(function( event ) {
                 $(".form_body").slideUp();
-                $(".show_search_form").hide().empty().append('Show search form').fadeIn(100)
             });
     $("#reset").button();
     $("#report, #page_num, #word_num, #field, #method").buttonset()
@@ -188,26 +187,34 @@ $(document).ready(function(){
 
 function showHide(value) {
     if (value == 'frequency') {
+        $("#search_elements").hide()
         $("#collocation").hide()
         $("#results_per_page").hide()
-        $("#frequency, #method").fadeIn('fast')
+        $("#frequency, #method").show()
+        $("#search_elements").fadeIn('fast')
     }
     if (value == 'collocation') {
+        $("#search_elements").hide()
         $("#frequency").hide()
         $("#results_per_page").hide()
-        $("#method").fadeOut('fast')
-        $("#collocation").fadeIn('fast')
+        $("#method").hide()
+        $("#collocation").show()
+        $("#search_elements").fadeIn('fast')
     }
     if (value == 'concordance' || value == 'kwic') {
+        $("#search_elements").hide()
         $("#frequency").hide()
         $("#collocation").hide()
-        $("#results_per_page, #method").fadeIn('fast')
+        $("#results_per_page, #method").show()
+        $("#search_elements").fadeIn('fast')
     }
     if (value == 'relevance') {
+        $("#search_elements").hide()
         $("#frequency").hide()
         $("#collocation").hide()
-        $("#method").fadeOut('fast')
-        $("#results_per_page").fadeIn('fast')
+        $("#method").hide()
+        $("#results_per_page").show()
+        $("#search_elements").fadeIn('fast')
     }
 }
 

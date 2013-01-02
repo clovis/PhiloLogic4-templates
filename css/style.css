@@ -397,6 +397,10 @@ ul.ui-autocomplete.ui-menu {
     font-size: inherit !important;
     font-family: inherit !important;
 }
+.ui-tooltip {
+    font-size: 10 !important;
+    font-family: inherit !important;
+}
 
 .search_box {
     width: 200px;
@@ -404,4 +408,25 @@ ul.ui-autocomplete.ui-menu {
 
 .show_search_form {
     font-size: 140%;
+    color: #800000;
+    font-weight: 600;
+    padding-bottom: 10px;
+    width: 485px;
+}
+.report {
+    width: 485px;
+    padding-bottom: 30px;
+    border-bottom: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #ECECEC;
+}
+a.close_search_box {
+    font-size: 140%;
+    padding-left: 390px;
+    color: Gray;
+    display: none;
+}
+a.close_search_box:hover {
+    text-decoration: none;
+    color: Black;
 }

@@ -1,6 +1,14 @@
 <div class='form_body'>
 <form id="search" action="${db.locals['db_url'] + "/dispatcher.py/"}">
-<table id="first_table">
+<div id="report" class="report">
+ <input type="radio" name="report" id="report1" value='concordance' checked="checked"><label for="report1">Concordance</label>
+ <input type="radio" name="report" id="report2" value='relevance'><label for="report2">Ranked relevance</label>
+ <input type="radio" name="report" id="report3" value='kwic'><label for="report3">KWIC</label>
+ <input type="radio" name="report" id="report4" value='collocation'><label for="report4">Collocation</label>
+ <input type="radio" name="report" id="report5" value='frequency'><label for="report5">Frequency Table</label>
+ </div>
+ <div id="search_elements">
+ <table>
  <tr class="table_row" ><td class="first_column">Query Terms:</td><td class="second_column"><input type='text' name='q' id='q' class="search_box"></input>
  </td></tr>
  <tr><td></td>
@@ -19,15 +27,7 @@
     <tr class="table_row"><td class="first_column">${facet}:</td><td><input type='text' name='${facet}' id="${facet}" class="search_box"></input></td></tr>
 % endfor
  </table>
-<table>
- <tr class="table_row"><td>Search Report:</td><td><span id="report">
- <input type="radio" name="report" id="report1" value='concordance' checked="checked"><label for="report1">Concordance</label>
- <input type="radio" name="report" id="report2" value='relevance'><label for="report2">Ranked relevance</label>
- <input type="radio" name="report" id="report3" value='kwic'><label for="report3">KWIC</label>
- <input type="radio" name="report" id="report4" value='collocation'><label for="report4">Collocation</label>
- <input type="radio" name="report" id="report5" value='frequency'><label for="report5">Frequency Table</label>
- </span></td></tr>
- 
+<table> 
  <tr class="table_row" id="collocation"><td class="first_column">Within </td><td><span id='word_num'>
  <input type="radio" name="word_num" id="wordnum1" value="1"><label for="wordnum1">1</label>
  <input type="radio" name="word_num" id="wordnum2" value="2"><label for="wordnum2">2</label>
@@ -61,5 +61,6 @@
  <tr class="table_row"><td class="first_column"><input id="button" type='submit'/></td>
  <td><button type="reset" id="reset">Clear form</button></td></tr>
 </table>
+</div>
 </form>
 </div>
