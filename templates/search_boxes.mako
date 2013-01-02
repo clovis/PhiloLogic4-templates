@@ -58,7 +58,7 @@
  <input type="radio" name="pagenum" id="pagenum2" value='50'><label for="pagenum2">50</label>
  <input type="radio" name="pagenum" id="pagenum3" value='100'><label for="pagenum3">100</label>
  </span></td></tr>
- <tr class="table_row"><td class="first_column"><input id="button" type='submit'/></td>
+ <tr class="table_row"><td class="first_column"><input id="button" type='submit' value="Search"/></td>
  <td><button type="reset" id="reset">Clear form</button></td></tr>
 </table>
 </div>
