@@ -58,7 +58,7 @@ $(document).ready(function(){
         var field = fields[i];
         autocomplete_metadata(metadata, field)
     }
-//    The following is to display the right options when using the back button
+    //    The following is to display the right options when using the back button
     if ($("#report option[value='concordance']").attr('checked')) {
         $("#frequency").hide()
         $("#collocation").hide()
@@ -85,8 +85,8 @@ $(document).ready(function(){
         $("#results_per_page").show()
     }
     
-//  This is for displaying the full bibliography on mouse hover
-//  in kwic reports
+    //  This is for displaying the full bibliography on mouse hover
+    //  in kwic reports
     var config = {    
         over: showBiblio, 
         timeout: 100,  
@@ -94,7 +94,7 @@ $(document).ready(function(){
     };
     $(".kwic_biblio").hoverIntent(config)
 
-//  This will show more context in concordance searches
+    //  This will show more context in concordance searches
     $(".more_context").click(function() {
         var context_link = $(this).text();
         if (context_link == 'More') {
@@ -109,7 +109,7 @@ $(document).ready(function(){
         }
     });
     
-//  This will prefill the search form with the current query
+    //  This will prefill the search form with the current query
     var val_list = q_string.split('&');
     for (var i = 0; i < val_list.length; i++) {
         var key_value = val_list[i].split('=');
@@ -138,7 +138,7 @@ $(document).ready(function(){
     });
     
     
-//  Clear search form
+    //  Clear search form
     $("#reset").click(function() {
         $("#q").empty();
         $("#arg").empty();
@@ -152,7 +152,7 @@ $(document).ready(function(){
         showHide('concordance');
     });
     
-//  This is to select the right option when clicking on the input box  
+    //  This is to select the right option when clicking on the input box  
     $("#arg1").focus(function() {
         $("#method1").attr('checked', true).button("refresh");
     });
@@ -163,7 +163,7 @@ $(document).ready(function(){
         $("#method3").attr('checked', true).button("refresh");
     });
     
-//    This will display the sidebar for various frequency reports
+    //    This will display the sidebar for various frequency reports
     $("#toggle_frequency").click(function() {
         toggle_frequency(q_string, db_path, pathname);
     });
@@ -174,7 +174,7 @@ $(document).ready(function(){
         hide_frequency();
     });
     
-//  jQueryUI theming
+    //  jQueryUI theming
     $( "#button" )
             .button()
             .click(function( event ) {
