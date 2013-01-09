@@ -21,9 +21,9 @@
    <div class="kwic_concordance">
    % if len(str(end)) > len(str(pos)):
     <% spaces = ' ' * (len(str(end)) - len(str(pos))) %>
-    <span id="position" style="white-space:pre-wrap;font-weight:900">${pos}.${spaces}</span>
+    <span id="position" style="white-space:pre-wrap;">${pos}.${spaces}</span>
    % else:
-    <span id="position" style="font-weight:900">${pos}.</span>    
+    <span id="position">${pos}.</span>    
    % endif
    ${i}</div>  
   % endfor

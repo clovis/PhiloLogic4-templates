@@ -58,32 +58,6 @@ $(document).ready(function(){
         var field = fields[i];
         autocomplete_metadata(metadata, field)
     }
-    //    The following is to display the right options when using the back button
-    if ($("#report option[value='concordance']").attr('checked')) {
-        $("#frequency").hide()
-        $("#collocation").hide()
-        $("#results_per_page").show()
-    }
-    if ($("#report option[value='kwic']").attr('checked')) {
-        $("#frequency").hide()
-        $("#collocation").hide()
-        $("#results_per_page").show()
-    }
-    if ($("#report option[value='collocation']").attr('checked')) {
-        $("#frequency").hide()
-        $("#results_per_page").hide()
-        $("#collocation").show()
-    }
-    if ($("#report option[value='frequency']").attr('checked')) {
-        $("#collocation").hide()
-        $("#results_per_page").hide()
-        $("#frequency").show()
-    }
-    if ($("#report option[value='relevance']").attr('checked')) {
-        $("#frequency").hide()
-        $("#collocation").hide()
-        $("#results_per_page").show()
-    }
     
     //  This is for displaying the full bibliography on mouse hover
     //  in kwic reports

@@ -71,7 +71,7 @@ def clean_text(text, notag=True, kwic=False, collocation=False):
         text = text.replace('\n', ' ')
         text = text.replace('\r', '')
         text = text.replace('\t', ' ')
-        ## Assuming that the highlight tag is <b>
+        ## Assuming that the highlight tag is a <span>
         temp_text = re.sub('<(/?span.*)>', '[\\1]', text)
         temp_text = re.sub('<.*?>', '', temp_text)
         text = re.sub('\[(/?span.*)\]', '<\\1>', temp_text)
