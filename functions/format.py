@@ -64,7 +64,12 @@ def highlighter(text):
 #    unicode_str = re.compile(r"([^ \.,;:?!\"\n\r\t\(\)]+)|([\.;:?!])", re.UNICODE)
 #    text_chunks = unicode_str.split(text[word_byte:].decode('utf-8', 'ignore'))
 #    end_byte = word_byte + len(text_chunks[1].encode('utf-8', 'ignore'))
-    end_byte = re.match(r"([^ \.,;:?!\'\-\"\n\r\t\(\)]+)",text).end()    
+    breaker = re.match(r"([^ \.,;:?!\'\-\"\n\r\t\(\)]+)",text)
+    if breaker:
+        end_byte = breaker.end()
+    else:
+        end_byte = len(text)
+#    end_byte = re.match(r"([^ \.,;:?!\'\-\"\n\r\t\(\)]+)",text).end()        
     r_text = '<span class="highlight">' + text[:end_byte] + '</span>' # 0 element is always an empty string
 #    print >> sys.stderr, r_text,end_byte
     return r_text, end_byte

@@ -33,6 +33,9 @@ def parse_cgi(environ):
     query["q"] = cgi.get("q",[None])[0]
     query["method"] = cgi.get("method",[None])[0] 
     query["arg"] = cgi.get("arg",[0])[0]
+    if query["method"] == "sentence" or query["method"] == "cooc":
+        query["arg"] = "6"
+    
     query["report"] = cgi.get("report",[None])[0]
     query["format"] = cgi.get("format",[None])[0]
     query["results_per_page"] = int(cgi.get("results_per_page",[20])[0])

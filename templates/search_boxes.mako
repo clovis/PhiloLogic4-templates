@@ -5,7 +5,7 @@
  <tr><td><select name='method' id='method'>
  <option value='proxy'>Within x words</option>
  <option value='phrase'>Exactly x words</option>
- <option value='sentence'>Within x sentences</option>
+ <option value='cooc'>In the same sentence</option>
  </select></td><td>
  <input type='text' name='arg' id='arg'></input></td></tr>
  

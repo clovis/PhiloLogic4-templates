@@ -1,4 +1,7 @@
 /* Get the footer to stick at the bottom */
+s {
+  text-decoration: none;
+}
 #container {
     position: relative;
     min-height: 100%;
@@ -251,11 +254,11 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
         padding-right: 20px;
 }
 .philologic_concordance .philologic_occurrence {
-        padding-top: 10px;
-        padding-bottom : 10px;
+        padding-top: 7px;
+        padding-bottom : 8px;
         border-style:solid;
         border-width:1px;
-        border-color: #ECECEC;
+        border-color: #CCCCCC;
         border-left:0px;
         border-right:0px;
         border-bottom:0px;
