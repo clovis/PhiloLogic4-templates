@@ -1,4 +1,7 @@
 /* Get the footer to stick at the bottom */
+s {
+  text-decoration: none;
+}
 #container {
     position: relative;
     min-height: 100%;
@@ -249,11 +252,11 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
         padding-right: 20px;
 }
 .philologic_concordance .philologic_occurrence {
-        padding-top: 8px;
-        padding-bottom : 9px;
+        padding-top: 7px;
+        padding-bottom : 8px;
         border-style:solid;
         border-width:1px;
-        border-color: #ECECEC;
+        border-color: #CCCCCC;
         border-left:0px;
         border-right:0px;
         border-bottom:0px;
@@ -344,6 +347,12 @@ a.hide_frequency:hover {
         padding-right: 20px;
         margin-top: -40px;
 }
+
+.sidebar_display .freq_sidebar_status{
+	margin: 0em 0em 0.5em 0em;
+}
+
+
 .frequency_table {
         padding-top: 10px;
 }

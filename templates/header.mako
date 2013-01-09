@@ -12,7 +12,7 @@
 <script type="text/javascript" src="${db.locals['db_url']}/js/jquery.hoverIntent.minified.js"></script>
 <%include file="form_header.js"/>
 </head>
-<body>
+<body onunload="">
 <div id="container">
 <div id="wrapper">
     <div id="header">

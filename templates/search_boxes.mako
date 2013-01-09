@@ -1,4 +1,5 @@
 <div class='form_body'>
+
 <form id="search" action="${db.locals['db_url'] + "/dispatcher.py/"}">
 <div id="report" class="report">
  <input type="radio" name="report" id="report1" value='concordance' checked="checked"><label for="report1">Concordance</label>
@@ -19,10 +20,10 @@
  <br><input type="radio" name="method" id="method2" value='phrase'><label for="method2">Exactly</label>
  <input type='text' name='arg' id='arg2' style="margin-left:11px !important;width:30px; text-align: center;"></input>
  <span style="padding-left:5px;">words</span>
- <br><input type="radio" name="method" id="method3" value='sentence'><label for="method3">Within</label>
- <input type='text' name='arg' id='arg3' style="margin-left:15px !important;width:30px; text-align: center;"></input>
- <span style="padding-left:5px;">sentences</span>
+ <br><input type="radio" name="method" id="method3" value='cooc'><label for="method3">In the same sentence</label>
+
  </span></td></tr>
+
 % for facet in db.locals["metadata_fields"]:
     <tr class="table_row"><td class="first_column">${facet}:</td><td><input type='text' name='${facet}' id="${facet}" class="search_box"></input></td></tr>
 % endfor

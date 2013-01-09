@@ -1,3 +1,4 @@
+
 <div class="sidebar_display">
 <span id="toggle_frequency" class="show_frequency">
 <a href="javascript:void(0)">Click to show frequency by:</a>

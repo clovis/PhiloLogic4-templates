@@ -56,7 +56,13 @@ def chunkifier(conc_text, bytes, kwic=False, highlight=False):
 
 def highlighter(text):
     """This function highlights a passage based on the hit's byte offset"""
-    end_byte = re.match(r"([^ \.,;:?!\'\-\"\n\r\t\(\)]+)",text).end()    
+
+    breaker = re.match(r"([^ \.,;:?!\'\-\"\n\r\t\(\)]+)",text)
+    if breaker:
+        end_byte = breaker.end()
+    else:
+        end_byte = len(text)
+
     r_text = '<span class="highlight">' + text[:end_byte] + '</span>' # 0 element is always an empty string
     return r_text, end_byte
 
@@ -72,9 +78,9 @@ def clean_text(text, notag=True, kwic=False, collocation=False):
         text = text.replace('\r', '')
         text = text.replace('\t', ' ')
         ## Assuming that the highlight tag is a <span>
-        temp_text = re.sub('<(/?span.*)>', '[\\1]', text)
+        temp_text = re.sub('<(/?span.*?)>', '[\\1]', text)
         temp_text = re.sub('<.*?>', '', temp_text)
-        text = re.sub('\[(/?span.*)\]', '<\\1>', temp_text)
+        text = re.sub('\[(/?span.*?)\]', '<\\1>', temp_text)
         text = re.sub(' {2,}', ' ', text)
     if collocation:
         text = re.sub("-", " ", text)
