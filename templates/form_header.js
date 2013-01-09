@@ -223,6 +223,9 @@ function toggle_frequency(q_string, db_url, pathname) {
         $(".loading").append(spinner).show();
         $.getJSON(script_call, function(data) {
             $(".loading").hide().empty();
+	    if (field == "collocate") {
+		$("#freq").append("<p class='freq_sidebar_status'>Collocates within 5 words left or right</p>");
+	    }
             $.each(data, function(index, item) {
                 if (item[0].length > 30) {
                     var url = '<a href="' + item[2] + '">' + item[0].slice(0,30) + '[...]</a>'

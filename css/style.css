@@ -347,6 +347,12 @@ a.hide_frequency:hover {
         padding-right: 20px;
         margin-top: -40px;
 }
+
+.sidebar_display .freq_sidebar_status{
+	margin: 0em 0em 0.5em 0em;
+}
+
+
 .frequency_table {
         padding-top: 10px;
 }
