@@ -24,7 +24,7 @@
     % if i.collocate_num > 1:
         <span style="padding-left:20px"><b>At least ${i.collocate_num} occurences of collocate in hit</b></span>
     % endif
-    <a href="javascript:void(0)" class="more_context">Show more context</a>
+    <a href="javascript:void(0)" class="more_context">More</a>
     <div class='philologic_context'>${fetch_concordance(i, path, q)}</div>
    </li>
   % endfor

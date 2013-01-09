@@ -9,7 +9,8 @@ import json
 
     
 def autocomplete_term(word_start):
-    path = frequencies_file(os.environ, 'word')
+    path = os.environ['SCRIPT_FILENAME'].replace('scripts/term_list.py', '')
+    path += 'data/frequencies/word_frequencies'
     
     ## Workaround for when jquery send a list of words: happens when using the back button
     if isinstance(word_start, list):

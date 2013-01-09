@@ -37,7 +37,6 @@ def chunkifier(conc_text, bytes, kwic=False, highlight=False):
     for pos, word_byte in enumerate(bytes):
         if highlight: 
             text, end_byte = highlighter(conc_text[word_byte:])
-            print >> sys.stderr, word_byte, end_byte
             end_byte = word_byte + end_byte
         else:
             text_chunks = re.split("([^ \.,;:?!\'\-\"\n\r\t\(\)]+)", conc_text[word_byte:])
@@ -46,32 +45,25 @@ def chunkifier(conc_text, bytes, kwic=False, highlight=False):
         conc_middle += text
         if len(bytes) > pos+1:
             conc_middle += conc_text[end_byte:bytes[pos+1]]
-        print >> sys.stderr, conc_middle
     conc_end = conc_text[end_byte:]
     
     ## Make sure we have no words cut out
     conc_start = re.sub("^[^ ]+ ", "", conc_start)
     conc_end = re.sub(" [^ ]+$", "", conc_end)
-    #print >> sys.stderr, conc_start
     
     return conc_start, conc_middle, conc_end
 
 
 def highlighter(text):
     """This function highlights a passage based on the hit's byte offset"""
-    # the split returns an empty list if the word_byte goes beyond the text excerpt
-    # which causes an index error on the following line
-#    unicode_str = re.compile(r"([^ \.,;:?!\"\n\r\t\(\)]+)|([\.;:?!])", re.UNICODE)
-#    text_chunks = unicode_str.split(text[word_byte:].decode('utf-8', 'ignore'))
-#    end_byte = word_byte + len(text_chunks[1].encode('utf-8', 'ignore'))
+
     breaker = re.match(r"([^ \.,;:?!\'\-\"\n\r\t\(\)]+)",text)
     if breaker:
         end_byte = breaker.end()
     else:
         end_byte = len(text)
-#    end_byte = re.match(r"([^ \.,;:?!\'\-\"\n\r\t\(\)]+)",text).end()        
+
     r_text = '<span class="highlight">' + text[:end_byte] + '</span>' # 0 element is always an empty string
-#    print >> sys.stderr, r_text,end_byte
     return r_text, end_byte
 
 
@@ -85,7 +77,7 @@ def clean_text(text, notag=True, kwic=False, collocation=False):
         text = text.replace('\n', ' ')
         text = text.replace('\r', '')
         text = text.replace('\t', ' ')
-        ## Assuming that the highlight tag is <b>
+        ## Assuming that the highlight tag is a <span>
         temp_text = re.sub('<(/?span.*)>', '[\\1]', text)
         temp_text = re.sub('<.*?>', '', temp_text)
         text = re.sub('\[(/?span.*)\]', '<\\1>', temp_text)

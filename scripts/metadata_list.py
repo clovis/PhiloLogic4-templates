@@ -8,7 +8,8 @@ sys.path.append('..')
 from functions.query_parser import *
     
 def autocomplete_metadata(metadata, field):
-    path = frequencies_file(os.environ, field)
+    path = os.environ['SCRIPT_FILENAME'].replace('scripts/metadata_list.py', '')
+    path += 'data/frequencies/%s_frequencies' % field
     
     ## Workaround for when jquery sends a list of words: this happens when using the back button
     if isinstance(metadata, list):

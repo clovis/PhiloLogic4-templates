@@ -1,5 +1,6 @@
 <%include file="header.mako"/>
-<a href="javascript:void(0)" class="show_search_form">Show search form</a>
+<a href="javascript:void(0)" class="show_search_form" title="Click to show the search form">Search form</a>
+<a href="javascript:void(0)" class="close_search_box">X</a>
 <%include file="search_boxes.mako"/>
 <div class='philologic_response'>
  <div class='initial_report'>
@@ -20,9 +21,9 @@
    <div class="kwic_concordance">
    % if len(str(end)) > len(str(pos)):
     <% spaces = ' ' * (len(str(end)) - len(str(pos))) %>
-    <span id="position" style="white-space:pre-wrap;font-weight:900">${pos}.${spaces}</span>
+    <span id="position" style="white-space:pre-wrap;">${pos}.${spaces}</span>
    % else:
-    <span id="position" style="font-weight:900">${pos}.</span>    
+    <span id="position">${pos}.</span>    
    % endif
    ${i}</div>  
   % endfor

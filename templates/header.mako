@@ -4,10 +4,11 @@
   <title>${dbname}</title>
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400,300&subset=latin,cyrillic-ext,greek-ext,greek,latin-ext' rel='stylesheet' type='text/css'>
+<link type="text/css" href="${db.locals['db_url']}/css/smoothness/jquery-ui-1.9.2.custom.css" rel="stylesheet" />
 <link rel="stylesheet" href="${db.locals['db_url']}/css/style.css" type="text/css" media="screen, projection">
-<link type="text/css" href="${db.locals['db_url']}/css/ui-lightness/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js" type="text/javascript"></script>
-<script type="text/javascript" src="${db.locals['db_url']}/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="${db.locals['db_url']}/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script type="text/javascript" src="${db.locals['db_url']}/js/jquery.hoverIntent.minified.js"></script>
 <%include file="form_header.js"/>
 </head>
@@ -28,7 +29,7 @@
       </div>
             
       <div class="region-content">
-        <h1><a href="/philo4/${dbname}/" title="${dbname}"><span class="site-name">${dbname} alpha5</span></a></h1>           
+        <h1><a href="${db.locals['db_url']}/" title="${dbname}"><span class="site-name">${dbname.title()} alpha5</span></a></h1>           
       </div>
     </div>
   <div class="main_body">

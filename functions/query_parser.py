@@ -15,6 +15,8 @@ accents = {'A': "(a|\xc3\xa0|\xc3\xa1|\xc3\xa2|\xc3\xa3|\xc3\xa4|\xc3\x82)",
            'U': "(u|\xc3\xb9|\xc3\xba|\xc3\xbb|\xc3\xbc)",  
            'Y': "(y|\xc3\xbf|xc3\xbd)"}
 
+word_char = re.compile('([A-Z]+|\*)')
+
 def expand_query(term, path):
     ## Look for uppercase letters and replace with regex pattern
     for uppercase in accents:
@@ -26,12 +28,6 @@ def expand_query(term, path):
     matching_list = word_pattern_search(term, path)
     matching_list = [i.strip() for i in matching_list if i]
     return matching_list
-    
-def frequencies_file(environ, field_type):
-    path = environ['SCRIPT_FILENAME']
-    path = re.sub('(philo4beta2/[^/]+/).*', '\\1', path)
-    path += 'data/frequencies/%s_frequencies' % field_type
-    return path
     
 def word_pattern_search(term, path):
     if re.search('\*', term):
@@ -55,16 +51,15 @@ def metadata_pattern_search(term, path):
 
 def word_exploder(terms):
     """ Expand queries"""
-    ## Find path to all_frequencies
-    path = frequencies_file(os.environ, 'word')
-    
-    ## Compile regex for testing wether we want to expand
-    expand = re.compile('([A-Z]+|\*)')
+    ## Get path to the word_frequencies file
+    path = os.environ['SCRIPT_FILENAME']
+    path = path.replace('dispatcher.py', '')
+    path += 'data/frequencies/word_frequencies'
     
     ## Iterate through query
     matching_list = ''
     for t in terms.split():
-        if expand.search(t):
+        if word_char.search(t):
             t = '|'.join(expand_query(t, path))
         matching_list = matching_list + ' ' + t
         
@@ -74,6 +69,6 @@ def word_exploder(terms):
 def query_parser(query):
     query = query.strip()
     query = query.replace('  ', ' ')
-    if re.search('([A-Z]+|\*)', query):
+    if word_char.search(query):
         query = word_exploder(query)
     return query
