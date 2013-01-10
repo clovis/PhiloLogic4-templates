@@ -45,7 +45,6 @@ def filter_hits(q, obj_types, c):
         query = 'select count(*) from toms where '
         query += ' or '.join(['philo_type="%s"' % i for i in obj_types])
         query += ' and philo_name != "__philo_virtual"'
-        print >> sys.stderr, query
         c.execute(query)
         total_docs = int(c.fetchone()[0])
     return philo_ids, total_docs

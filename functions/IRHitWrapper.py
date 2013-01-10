@@ -14,7 +14,7 @@ class ir_hit_wrapper(object):
         self.toms_table = set(db.locals["metadata_fields"] + ['word_count', 'filename'])
         self.hit = hit
         self.philo_id = hit.split()
-        self.bytes = bytes
+        self.bytes = [int(byte) for byte in bytes]
         self.type = obj_type
         self.encoding = encoding
         self.score = score

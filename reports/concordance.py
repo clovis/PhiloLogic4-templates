@@ -18,7 +18,11 @@ def concordance(environ,start_response):
         return render_template(results=hits,db=db,dbname=dbname,q=q,fetch_concordance=fetch_concordance,f=f,
                                 path=path, results_per_page=q['results_per_page'], template_name="concordance.mako")
 
-def fetch_concordance(hit, path, q, length=2000):
+def fetch_concordance(hit, path, q):
+    ## Determine length of text needed
+    byte_distance = hit.bytes[-1] - hit.bytes[0]
+    length = 1000 + byte_distance + 1000
+    
     bytes, byte_start = f.format.adjust_bytes(hit.bytes, length)
     conc_text = f.get_text(hit, byte_start, length, path)
     conc_start, conc_middle, conc_end = f.format.chunkifier(conc_text, bytes, highlight=True)
@@ -26,9 +30,10 @@ def fetch_concordance(hit, path, q, length=2000):
     conc_end = f.format.clean_text(conc_end)
     conc_text = conc_start + conc_middle + conc_end
     conc_text = conc_text.decode('utf-8', 'ignore')
-    highlight_index = conc_text.find('<span class="highlight"')
-    begin = highlight_index - 200 ## make sure the highlighted term does not get hidden
-    end = highlight_index + 200
+    start_highlight = conc_text.find('<span class="highlight"')
+    end_highlight = conc_text.rfind('</span>')
+    begin = start_highlight - 200
+    end = end_highlight + 200
     min = bytes[-1] + len("<span class='highlight'></span>") * len(bytes)
     if end < min:
         end = min
