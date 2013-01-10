@@ -133,9 +133,6 @@ $(document).ready(function(){
     $("#arg2").focus(function() {
         $("#method2").attr('checked', true).button("refresh");
     });
-    $("#arg3").focus(function() {
-        $("#method3").attr('checked', true).button("refresh");
-    });
     
     //    This will display the sidebar for various frequency reports
     $("#toggle_frequency").click(function() {
