@@ -127,12 +127,12 @@ a.active, a:link.active, a:visited.active, a:hover.active {
 
 /* Fonts */
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Averia Serif Libre', cursive;
 }
 
 .main_body{
-    font-weight:400;
-    font-size: 12px;
+    font-weight:300;
+    font-size: 14px;
 }
 
 table {
@@ -301,7 +301,7 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
 }
 .highlight {
         color: #EF4500;
-        font-weight: 600;
+        font-weight: 700;
 }
 .more {
         font-size: 130%;
@@ -333,10 +333,11 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
 
 /*All the sidebar classes*/
 a.hide_frequency {
-        float: right;
-        padding-right: 20px;
-        padding-left: 20px;
-        color: Gray;
+    font-family: 'Droid Sans Mono' sans-serif !important;
+    float: right;
+    padding-right: 20px;
+    padding-left: 20px;
+    color: Gray;
 }
 a.hide_frequency:hover {
         text-decoration: none;
@@ -375,7 +376,7 @@ a.hide_frequency:hover {
 }
 .collocate {
     color:#1E90FF;
-    font-weight:600;
+    font-weight:700;
 }
 .current_page {
     font-size: 170%;
@@ -404,18 +405,19 @@ ul.ui-autocomplete.ui-menu {
     color: #800000;
     font-weight: 600;
     padding-bottom: 10px;
-    width: 485px;
+    width: 570px;
 }
 .report {
-    width: 485px;
+    width: 585px;
     padding-bottom: 30px;
     border-bottom: solid;
     border-bottom-width: 1px;
     border-bottom-color: #ECECEC;
 }
 a.close_search_box {
-    font-size: 140%;
-    padding-left: 390px;
+    font-family: 'Droid Sans Mono' sans-serif !important;
+    font-size: 130%;
+    padding-left: 455px;
     color: Gray;
     display: none;
 }

@@ -3,8 +3,7 @@
 <head>
   <title>${dbname}</title>
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Averia+Sans+Libre:300,400,700,300italic,400italic,700italic|Averia+Serif+Libre:300,400,700,300italic,400italic,700italic|Libre+Baskerville:400,700,400italic|Averia+Libre:400,300,300italic,400italic,700,700italic|Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700&subset=latin,latin-ext,cyrillic-ext,greek-ext,greek' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono|Averia+Serif+Libre:300,400,700,300italic,400italic,700italic&subset=latin,latin-ext,cyrillic-ext,greek-ext,greek,cyrillic' rel='stylesheet' type='text/css'>
 <link type="text/css" href="${db.locals['db_url']}/css/smoothness/jquery-ui-1.9.2.custom.css" rel="stylesheet" />
 <link rel="stylesheet" href="${db.locals['db_url']}/css/style.css" type="text/css" media="screen, projection">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js" type="text/javascript"></script>
