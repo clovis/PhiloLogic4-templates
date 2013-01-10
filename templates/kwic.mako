@@ -16,16 +16,17 @@
  </div>
  <%include file="show_frequency.mako"/>
  <div class="results_container">
-  % for p, i in enumerate(kwic_results):
-    <% pos = p + 1 %>
+ <% current_pos = start %>
+  % for i in kwic_results:
    <div class="kwic_concordance">
-   % if len(str(end)) > len(str(pos)):
-    <% spaces = ' ' * (len(str(end)) - len(str(pos))) %>
-    <span id="position" style="white-space:pre-wrap;">${pos}.${spaces}</span>
+   % if len(str(end)) > len(str(current_pos)):
+    <% spaces = ' ' * (len(str(end)) - len(str(current_pos))) %>
+    <span id="position" style="white-space:pre-wrap;">${current_pos}.${spaces}</span>
    % else:
-    <span id="position">${pos}.</span>    
+    <span id="position">${current_pos}.</span>    
    % endif
-   ${i}</div>  
+   ${i}</div>
+   <% current_pos += 1 %>
   % endfor
  </div>
  <div class="more">

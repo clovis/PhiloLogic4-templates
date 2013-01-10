@@ -40,6 +40,10 @@ def fetch_kwic(results, path, q, byte_query, start, end, length=400):
         if len(biblio) < shortest_biblio:
             shortest_biblio = len(biblio)
             
+        ## Determine length of text needed
+        byte_distance = hit.bytes[-1] - hit.bytes[0]
+        length = 200 + byte_distance + 200
+            
         ## Get concordance and align it
         bytes, byte_start = f.format.adjust_bytes(hit.bytes, length)
         conc_text = f.get_text(hit, byte_start, length, path)

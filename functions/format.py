@@ -111,7 +111,7 @@ def clean_text(text, notag=True, kwic=False, collocation=False):
 def align_text(text, byte_num, chars=40):
     """This function is meant for formating text for KWIC results"""
     start_hit = text.index('<span class="highlight">')
-    end_hit = text.index('</span>') + 7
+    end_hit = text.rindex('</span>') + 7
     tag_length = 7 * byte_num
     start_text = convert_entities(text[:start_hit])
     if len(start_text) < chars:
