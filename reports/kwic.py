@@ -31,7 +31,7 @@ def fetch_kwic(results, path, q, byte_query, start, end, length=400):
         biblio = ' '.join(biblio.split()) ## maybe hackish, but it works
         
         get_query = byte_query(hit.bytes)
-        href = "./" + '/'.join([str(i) for i in hit.philo_id[:5]]) + get_query
+        href = "./" + '/'.join([str(i) for i in hit.philo_id[:4]]) + get_query
         
         ## Find shortest bibliography entry
         biblio = biblio
