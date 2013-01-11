@@ -191,15 +191,14 @@ function showHide(value) {
 
 // These functions are for the kwic bibliography which is shortened by default
 function showBiblio() {
-    $(this).css('background', 'LightGray')
     $(this).children("#full_biblio").css('position', 'absolute').css('text-decoration', 'underline')
     $(this).children("#full_biblio").css('background', 'LightGray')
+    $(this).children("#full_biblio").css('box-shadow', '5px 5px 5px #888888')
     $(this).children("#full_biblio").css('display', 'inline')
 }
 
 function hideBiblio() {
-    $(this).css('background', 'white')
-    $(this).children("#full_biblio").hide(200)
+    $(this).children("#full_biblio").fadeOut(200)
 }
 
 //    These functions are for the sidebar frequencies
