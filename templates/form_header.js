@@ -120,9 +120,9 @@ $(document).ready(function(){
             var field = $("#" + i);
             $(field).empty();
         }
-        $("#method1").attr('checked', true).button("refresh");
-        $("#report1").attr('checked', true).button("refresh");
-        $("#pagenum1").attr('checked', true).button("refresh");
+        $("#method1").prop('checked', true).button("refresh");
+        $("#report1").prop('checked', true).button("refresh");
+        $("#pagenum1").prop('checked', true).button("refresh");
         showHide('concordance');
     });
     
@@ -160,31 +160,46 @@ function showHide(value) {
     if (value == 'frequency') {
         $("#search_elements").hide()
         $("#collocation").hide()
-        $("#results_per_page").hide()
-        $("#frequency, #method").show()
+        $("#results_per_page, #time_series").hide()
+        $("#frequency, #method, #metadata_field").show()
         $("#search_elements").fadeIn('fast')
     }
     if (value == 'collocation') {
         $("#search_elements").hide()
         $("#frequency").hide()
         $("#results_per_page").hide()
-        $("#method").hide()
-        $("#collocation").show()
+        $("#method, #time_series").hide()
+        $("#collocation, #metadata_field").show()
         $("#search_elements").fadeIn('fast')
     }
-    if (value == 'concordance' || value == 'kwic') {
+    if (value == 'concordance') {
         $("#search_elements").hide()
         $("#frequency").hide()
-        $("#collocation").hide()
-        $("#results_per_page, #method").show()
+        $("#collocation, #time_series").hide()
+        $("#results_per_page, #method, #metadata_field").show()
+        $("#search_elements").fadeIn('fast')
+    }
+    if (value == 'kwic') {
+        $("#search_elements").hide()
+        $("#frequency").hide()
+        $("#collocation, #time_series").hide()
+        $("#results_per_page, #method, #metadata_field").show()
         $("#search_elements").fadeIn('fast')
     }
     if (value == 'relevance') {
         $("#search_elements").hide()
         $("#frequency").hide()
         $("#collocation").hide()
-        $("#method").hide()
-        $("#results_per_page").show()
+        $("#method, #time_series").hide()
+        $("#results_per_page, #metadata_field").show()
+        $("#search_elements").fadeIn('fast')
+    }
+    if (value == "time_series") {
+        $("#search_elements").hide()
+        $("#frequency").hide()
+        $("#collocation").hide()
+        $("#results_per_page, #metadata_field").hide()
+        $("#time_series").show()
         $("#search_elements").fadeIn('fast')
     }
 }

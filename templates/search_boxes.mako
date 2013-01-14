@@ -7,6 +7,7 @@
  <input type="radio" name="report" id="report3" value='kwic'><label for="report3">KWIC</label>
  <input type="radio" name="report" id="report4" value='collocation'><label for="report4">Collocation</label>
  <input type="radio" name="report" id="report5" value='frequency'><label for="report5">Frequency Table</label>
+ <input type="radio" name="report" id="report6" value='time_series'><label for="report6">Time Series</label>
  </div>
  <div id="search_elements">
  <table>
@@ -23,9 +24,8 @@
  <br><input type="radio" name="method" id="method3" value='cooc'><label for="method3">In the same sentence</label>
 
  </span></td></tr>
-
 % for facet in db.locals["metadata_fields"]:
-    <tr class="table_row"><td class="first_column">${facet}:</td><td><input type='text' name='${facet}' id="${facet}" class="search_box"></input></td></tr>
+    <tr id="metadata_field" class="table_row"><td class="first_column">${facet}:</td><td><input type='text' name='${facet}' id="${facet}" class="search_box"></input></td></tr>
 % endfor
  </table>
 <table> 
@@ -41,6 +41,7 @@
  <input type="radio" name="word_num" id="wordnum9" value="9"><label for="wordnum9">9</label>
  <input type="radio" name="word_num" id="wordnum10" value="10"><label for="wordnum10">10</label>
  </span> words</td></tr>
+
  
  <tr class="table_row" id="frequency"><td class="first_column">Frequency by:</td><td><span id='field'>
 % for pos, facet in enumerate(db.locals["metadata_fields"]):
@@ -52,6 +53,10 @@
 % endfor
 </span>
 <input type="checkbox" name="rate" id="rate" value="relative"/>per 10,000
+</td></tr>
+
+<tr class="table_row" id="time_series">
+<td class="first_column">Date interval:</td><td>from <input type='text' name="start_date" style="width:35px;"</input> to <input type='text' name="end_date" style="width:35px;"</input>
 </td></tr>
 
 <tr class="table_row" id="results_per_page"><td class="first_column">Results per page:</td><td><span id='page_num'>

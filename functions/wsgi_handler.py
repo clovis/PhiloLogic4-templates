@@ -64,6 +64,10 @@ def parse_cgi(environ):
     ## This is for searches done from the bibliography template and possibly other use cases
     query['philo_id'] = cgi.get("philo_id", [''])
     
+    ## This is for time series
+    query['start_date'] = cgi.get("start_date", [''])[0]
+    query['end_date'] = cgi.get("end_date", [''])[0]
+    
 #    query["dbname"] = dbname
     query["dbpath"] = dbfile
     query["start"] = int(cgi.get('start',[0])[0]) # special range handling done in each service now.
