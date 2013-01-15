@@ -52,11 +52,15 @@
     % endif
 % endfor
 </span>
-<input type="checkbox" name="rate" id="rate" value="relative"/>per 10,000
+<input type="checkbox" name="rate" id="rate" value="relative"/>per 10,000 words
 </td></tr>
 
-<tr class="table_row" id="time_series">
-<td class="first_column">Date interval:</td><td>from <input type='text' name="start_date" style="width:35px;"</input> to <input type='text' name="end_date" style="width:35px;"</input>
+<tr class="table_row" style="margin-top:20px;" id="time_series">
+<td class="first_column">Dates:</td><td>from <input type='text' name="start_date" style="width:35px;"</input> to <input type='text' name="end_date" style="width:35px;"</input>
+<tr class="table_row" id="year_interval"><td class="first_column">Year interval:</td><td><span id="year_interval">
+<input type="radio" name="year_interval" id="year1" value="10" checked="checked"><label for="year1">every 10 years</label>
+<input type="radio" name="year_interval" id="year2" value="25"><label for="year2">every 25 years</label>
+</span>
 </td></tr>
 
 <tr class="table_row" id="results_per_page"><td class="first_column">Results per page:</td><td><span id='page_num'>

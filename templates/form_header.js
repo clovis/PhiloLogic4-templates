@@ -152,7 +152,7 @@ $(document).ready(function(){
                 $(".form_body").slideUp();
             });
     $("#reset").button();
-    $("#report, #page_num, #word_num, #field, #method").buttonset()
+    $("#report, #page_num, #word_num, #field, #method, #year_interval").buttonset()
     
 });
 
@@ -160,7 +160,7 @@ function showHide(value) {
     if (value == 'frequency') {
         $("#search_elements").hide()
         $("#collocation").hide()
-        $("#results_per_page, #time_series").hide()
+        $("#results_per_page, #time_series, #year_interval").hide()
         $("#frequency, #method, #metadata_field").show()
         $("#search_elements").fadeIn('fast')
     }
@@ -168,21 +168,21 @@ function showHide(value) {
         $("#search_elements").hide()
         $("#frequency").hide()
         $("#results_per_page").hide()
-        $("#method, #time_series").hide()
+        $("#method, #time_series, #year_interval").hide()
         $("#collocation, #metadata_field").show()
         $("#search_elements").fadeIn('fast')
     }
     if (value == 'concordance') {
         $("#search_elements").hide()
         $("#frequency").hide()
-        $("#collocation, #time_series").hide()
+        $("#collocation, #time_series, #year_interval").hide()
         $("#results_per_page, #method, #metadata_field").show()
         $("#search_elements").fadeIn('fast')
     }
     if (value == 'kwic') {
         $("#search_elements").hide()
         $("#frequency").hide()
-        $("#collocation, #time_series").hide()
+        $("#collocation, #time_series, #year_interval").hide()
         $("#results_per_page, #method, #metadata_field").show()
         $("#search_elements").fadeIn('fast')
     }
@@ -199,7 +199,7 @@ function showHide(value) {
         $("#frequency").hide()
         $("#collocation").hide()
         $("#results_per_page, #metadata_field").hide()
-        $("#time_series").show()
+        $("#method, #time_series, #year_interval").show()
         $("#search_elements").fadeIn('fast')
     }
 }
