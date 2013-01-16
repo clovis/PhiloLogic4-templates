@@ -30,7 +30,6 @@ def generate_frequency(q, db):
         c.execute(query, (query_words,))
     counts = {}
     relative_counts = {}
-    q["time_series_relative"] = True
     for i in c.fetchall():
         count = int(i['token_count'])
         try:
@@ -49,8 +48,7 @@ def generate_frequency(q, db):
         counts[date] += count
         relative_counts[date] += int(i['word_count'])
             
-    if q["time_series_relative"]:
-        relative_counts = dict([(date, counts[date] / relative_counts[date] * 10000) for date in counts])
+    relative_counts = dict([(date, counts[date] / relative_counts[date] * 10000) for date in counts])
         
     table = sorted(counts.iteritems(),key=lambda x: x[0], reverse=False)
     relative_table = sorted(relative_counts.iteritems(),key=lambda x: x[0], reverse=False)
