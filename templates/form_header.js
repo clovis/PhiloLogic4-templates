@@ -145,6 +145,16 @@ $(document).ready(function(){
         hide_frequency();
     });
     
+    // This is to display various types of time series
+    $('#absolute_time').click(function() {
+        $("#relative_chart").hide();
+        $("#absolute_chart").fadeIn('fast')
+    })
+    $('#relative_time').click(function() {
+        $("#absolute_chart").hide();
+        $("#relative_chart").fadeIn('fast')
+    })
+    
     //  jQueryUI theming
     $( "#button" )
             .button()
@@ -152,7 +162,7 @@ $(document).ready(function(){
                 $(".form_body").slideUp();
             });
     $("#reset").button();
-    $("#report, #page_num, #word_num, #field, #method, #year_interval").buttonset()
+    $("#report, #page_num, #word_num, #field, #method, #year_interval, #time_series_buttons").buttonset()
     
 });
 
@@ -198,8 +208,8 @@ function showHide(value) {
         $("#search_elements").hide()
         $("#frequency").hide()
         $("#collocation").hide()
-        $("#results_per_page, #metadata_field").hide()
-        $("#method, #time_series, #year_interval").show()
+        $("#results_per_page, #metadata_field, #method").hide()
+        $("#time_series, #year_interval").show()
         $("#search_elements").fadeIn('fast')
     }
 }

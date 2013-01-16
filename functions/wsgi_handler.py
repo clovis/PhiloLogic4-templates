@@ -68,6 +68,7 @@ def parse_cgi(environ):
     query['start_date'] = cgi.get("start_date", [''])[0]
     query['end_date'] = cgi.get("end_date", [''])[0]
     query['year_interval'] = cgi.get("year_interval", [''])[0]
+    query['time_series_relative'] = cgi.get("time_series_relative", [''])[0]
     
 #    query["dbname"] = dbname
     query["dbpath"] = dbfile

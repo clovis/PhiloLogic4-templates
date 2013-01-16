@@ -9,20 +9,35 @@ import json
 
 def time_series(environ,start_response):
     db, dbname, path_components, q = wsgi_response(environ,start_response)
-    hits = db.query(q["q"],q["method"],q["arg"],**q["metadata"])
-    frequencies = generate_frequency(hits, q, db)
-    return render_template(frequencies=frequencies,db=db,dbname=dbname,q=q,f=f, template_name='time_series.mako')
+    frequencies, relative_frequencies = generate_frequency(q, db)
+    return render_template(frequencies=frequencies,relative_frequencies=relative_frequencies,
+                           db=db,dbname=dbname,q=q,f=f, template_name='time_series.mako')
 
-def generate_frequency(results, q, db):
+def generate_frequency(q, db):
     start = int(q['start_date'])
     end = int(q['end_date'])
+    conn = db.dbh
+    c = conn.cursor()
+    query_words = q['q'].replace('|', ' ') ## Handle ORs from crapser
+    q['q'] = q['q'].replace(' ', '|') ## Add ORs for search links
+    if len(query_words.split()) > 1:
+        query = 'select ranked_relevance.philo_id, ranked_relevance.token_count, toms.word_count, toms.date from ranked_relevance inner join toms on toms.philo_id=ranked_relevance.philo_id and toms.philo_name!="__philo_virtual" where '
+        words =  query_words.split()
+        query += ' or '.join(['ranked_relevance.philo_name=?' for i in words])
+        c.execute(query, words)
+    else:
+        query = 'select ranked_relevance.philo_id, ranked_relevance.token_count, toms.word_count, toms.date from ranked_relevance inner join toms on toms.philo_id=ranked_relevance.philo_id and toms.philo_name!="__philo_virtual" where ranked_relevance.philo_name=?'
+        c.execute(query, (query_words,))
     counts = {}
-    for n in results:
+    relative_counts = {}
+    q["time_series_relative"] = True
+    for i in c.fetchall():
+        count = int(i['token_count'])
         try:
             if q["year_interval"] == "25":
-                date = round_quarter(int(n["date"]))
+                date = round_quarter(int(i["date"]))
             else:
-                date = round_decade(int(n["date"]))
+                date = round_decade(int(i["date"]))
         except ValueError: ## No valid date
             continue
         if not start <= date <= end :
@@ -30,18 +45,19 @@ def generate_frequency(results, q, db):
         date = str(date)
         if date not in counts:
             counts[date] = 0
-        counts[date] += 1
-       
-    
-    table = []
-    for k,v in sorted(counts.iteritems(),key=lambda x: x[0], reverse=False):
-        q["metadata"]["date"] = '"%s"' % str(k).encode('utf-8', 'ignore')
-        # Now build the url from q.
-        url = f.link.make_query_link(q["q"],q["method"],q["arg"],**q["metadata"])                 
-        table.append( (k,v) )
+            relative_counts[date] = 0
+        counts[date] += count
+        relative_counts[date] += int(i['word_count'])
+            
+    if q["time_series_relative"]:
+        relative_counts = dict([(date, counts[date] / relative_counts[date] * 10000) for date in counts])
+        
+    table = sorted(counts.iteritems(),key=lambda x: x[0], reverse=False)
+    relative_table = sorted(relative_counts.iteritems(),key=lambda x: x[0], reverse=False)
     
     table.insert(0, ('Date', 'Count'))
-    return json.dumps(table)
+    relative_table.insert(0, ('Date', 'Count'))
+    return (json.dumps(table), json.dumps(relative_table))
     
 def round_quarter(date):
     century = int(str(date)[:2] + '00')
