@@ -36,9 +36,7 @@ def parse_cgi(environ):
         query["arg"] = cgi.get("arg_proxy",[0])[0]
     elif query["method"] == "phrase":
         query["arg"] = cgi.get("arg_phrase",[0])[0]
-    else:
-        query["arg"] = 0
-    if query["method"] == "sentence" or query["method"] == "cooc":
+    elif query["method"] == "sentence" or query["method"] == "cooc":
         query["arg"] = "6"
     
     query["report"] = cgi.get("report",[None])[0]
