@@ -73,4 +73,5 @@
 </table>
 </div>
 </form>
+<div id="form_separation" class="form_separation"></div>
 </div>

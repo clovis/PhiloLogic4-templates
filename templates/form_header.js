@@ -105,10 +105,7 @@ $(document).ready(function(){
     showHide($('input[name=report]:checked', '#search').val());
     
     $('#report').change(function() {
-        var test = $(this).find(':checked').val();
-        console.log(test);
         var report = $('input[name=report]:checked', '#search').val();
-        console.log(report);
         showHide(report);
     });
     
