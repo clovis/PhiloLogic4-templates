@@ -31,8 +31,13 @@ def parse_cgi(environ):
     query = {}
     query["q_string"] = environ["QUERY_STRING"] ## this might be useful to have around
     query["q"] = cgi.get("q",[None])[0]
-    query["method"] = cgi.get("method",[None])[0] 
-    query["arg"] = cgi.get("arg",[0])[0]
+    query["method"] = cgi.get("method",[None])[0]
+    if query["method"] == "proxy":
+        query["arg"] = cgi.get("arg_proxy",[0])[0]
+    elif query["method"] == "phrase":
+        query["arg"] = cgi.get("arg_phrase",[0])[0]
+    else:
+        query["arg"] = 0
     if query["method"] == "sentence" or query["method"] == "cooc":
         query["arg"] = "6"
     

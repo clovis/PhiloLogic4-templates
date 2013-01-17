@@ -89,14 +89,11 @@ $(document).ready(function(){
         var key_value = val_list[i].split('=');
         var my_value = decodeURIComponent((key_value[1]+'').replace(/\+/g, '%20'));
         if (my_value) {
-            if (key_value[0] == 'pagenum' || key_value[0] == 'report' || key_value[0] == 'field' || key_value[0] == 'word_num' || key_value[0] == 'method') {
+            if (key_value[0] == 'pagenum' || key_value[0] == 'report' || key_value[0] == 'field' || key_value[0] == 'word_num' || key_value[0] == 'method' || key_value[0] == 'year_interval') {
                 $('input[name=' + key_value[0] + '][value=' + my_value + ']').attr("checked", true);
             }
             else if (my_value == 'relative') {
                 $('#' + key_value[0]).attr('checked', true);
-            }
-            else if (key_value[0] == 'arg') {
-                $('input[name="arg"]').val(my_value)
             }
             else {
                 $('#' + key_value[0]).val(my_value);
@@ -104,10 +101,14 @@ $(document).ready(function(){
         }
     }
     
+    
     showHide($('input[name=report]:checked', '#search').val());
     
     $('#report').change(function() {
+        var test = $(this).find(':checked').val();
+        console.log(test);
         var report = $('input[name=report]:checked', '#search').val();
+        console.log(report);
         showHide(report);
     });
     
@@ -127,10 +128,12 @@ $(document).ready(function(){
     });
     
     //  This is to select the right option when clicking on the input box  
-    $("#arg1").focus(function() {
+    $("#arg_proxy").focus(function() {
+        $("#arg_phrase").val('');
         $("#method1").attr('checked', true).button("refresh");
     });
-    $("#arg2").focus(function() {
+    $("#arg_phrase").focus(function() {
+        $("#arg_proxy").val('');
         $("#method2").attr('checked', true).button("refresh");
     });
     
@@ -145,16 +148,6 @@ $(document).ready(function(){
         hide_frequency();
     });
     
-    // This is to display various types of time series
-    $('#absolute_time').click(function() {
-        $("#relative_chart").hide();
-        $("#absolute_chart").fadeIn('fast')
-    })
-    $('#relative_time').click(function() {
-        $("#absolute_chart").hide();
-        $("#relative_chart").fadeIn('fast')
-    })
-    
     //  jQueryUI theming
     $( "#button" )
             .button()
@@ -163,6 +156,7 @@ $(document).ready(function(){
             });
     $("#reset").button();
     $("#report, #page_num, #word_num, #field, #method, #year_interval, #time_series_buttons").buttonset()
+    
     
 });
 
@@ -200,7 +194,7 @@ function showHide(value) {
         $("#search_elements").hide()
         $("#frequency").hide()
         $("#collocation").hide()
-        $("#method, #time_series").hide()
+        $("#method, #time_series, #year_interval").hide()
         $("#results_per_page, #metadata_field").show()
         $("#search_elements").fadeIn('fast')
     }
@@ -267,5 +261,6 @@ function hide_frequency() {
         "margin-right": "0px"},
         50);
 }
+
 
 </script>

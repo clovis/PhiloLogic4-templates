@@ -16,10 +16,10 @@
  <tr><td></td>
  <td><span id='method'>
  <input type="radio" name="method" id="method1" value='proxy' checked="checked"><label for="method1">Within</label>
- <input type='text' name='arg' id='arg1' style="margin-left:15px !important;width:30px; text-align: center;"></input>
+ <input type='text' name='arg_proxy' id='arg_proxy' style="margin-left:15px !important;width:30px; text-align: center;"></input>
  <span style="padding-left:5px;">words</span>
  <br><input type="radio" name="method" id="method2" value='phrase'><label for="method2">Exactly</label>
- <input type='text' name='arg' id='arg2' style="margin-left:11px !important;width:30px; text-align: center;"></input>
+ <input type='text' name='arg_phrase' id='arg_phrase' style="margin-left:11px !important;width:30px; text-align: center;"></input>
  <span style="padding-left:5px;">words</span>
  <br><input type="radio" name="method" id="method3" value='cooc'><label for="method3">In the same sentence</label>
 
@@ -56,7 +56,7 @@
 </td></tr>
 
 <tr class="table_row" id="time_series">
-<td class="first_column">Dates:</td><td>from <input type='text' name="start_date" style="width:35px;"</input> to <input type='text' name="end_date" style="width:35px;"</input>
+<td class="first_column">Dates:</td><td>from <input type='text' name="start_date" id="start_date" style="width:35px;"</input> to <input type='text' name="end_date" id="end_date" style="width:35px;"</input>
 <tr class="table_row" id="year_interval"><td class="first_column">Year interval:</td><td><span id="year_interval">
 <input type="radio" name="year_interval" id="year1" value="10" checked="checked"><label for="year1">every 10 years</label>
 <input type="radio" name="year_interval" id="year2" value="25"><label for="year2">every 25 years</label>
