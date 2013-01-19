@@ -114,7 +114,7 @@ html, body {
 a:link, a:visited {
   color: #800000;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
 }
 a:hover {
   color: #800000;
@@ -133,6 +133,7 @@ body {
 .main_body{
     font-weight:300;
     font-size: 14px;
+    line-height: 130%;
 }
 
 table {
@@ -240,6 +241,13 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
     width: 960px;
     display: none;
 }
+.search_elements {
+    margin-top: 20px;
+    border-top: solid;
+    border-top-width: 1px;
+    border-top-color: #ECECEC;
+    width: 685px;
+}
 .kwic_concordance {
         font-family: 'Droid Sans Mono', sans-serif;
         font-size: 12;
@@ -297,11 +305,11 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
         list-style-type: none;
 }
 .description {
-        font-size: 180%;
+        font-size: 140%;
 }
 .highlight {
         color: #EF4500;
-        font-weight: 700;
+        font-weight: 400;
 }
 .more {
         font-size: 130%;
@@ -376,7 +384,7 @@ a.hide_frequency:hover {
 }
 .collocate {
     color:#1E90FF;
-    font-weight:700;
+    font-weight:400;
 }
 .current_page {
     font-size: 170%;
@@ -401,33 +409,21 @@ ul.ui-autocomplete.ui-menu {
 }
 
 .show_search_form {
-    font-size: 140%;
+    font-size: 100%;
     color: #800000;
     font-weight: 600;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     width: 670px;
+    text-decoration: none !important;
 }
+
 .report {
     width: 685px;
-    padding-bottom: 30px;
-    border-bottom: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: #ECECEC;
+    /*padding-bottom: 20px;*/
 }
 .form_separation {
     width: 685px;
     border-bottom-style: double;
     border-bottom-width: 5px;
     border-bottom-color: #ECECEC;
-}
-a.close_search_box {
-    font-family: 'Droid Sans Mono' sans-serif !important;
-    font-size: 130%;
-    padding-left: 555px;
-    color: Gray;
-    display: none;
-}
-a.close_search_box:hover {
-    text-decoration: none;
-    color: Black;
 }

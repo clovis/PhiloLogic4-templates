@@ -8,7 +8,6 @@ import sqlite3
 import os
 from functions.wsgi_handler import wsgi_response
 from math import log
-from random import sample
 from philologic.DB import DB
 from functions.format import adjust_bytes, chunkifier, clean_text, align_text
 from bibliography import bibliography
@@ -136,31 +135,20 @@ def retrieve_hits(q, db):
     return f.IRHitWrapper.ir_results_wrapper(hits, db)
 
  
-def fetch_relevance(hit, path, q, kwic=True, samples=3):
-    length = 400
+def fetch_relevance(hit, path, q, samples=10):
+    length = 75
     text_snippet = []
-    if len(hit.bytes) >= samples:
-        byte_sample = sample(hit.bytes, samples)
-    else:
-        byte_sample = hit.bytes
+    byte_sample = hit.bytes[:samples]
     for byte in byte_sample: 
         byte = [int(byte)]
         bytes, byte_start = adjust_bytes(byte, length)
         conc_text = f.get_text(hit, byte_start, length, path)
-        conc_start, conc_middle, conc_end = chunkifier(conc_text, bytes, highlight=True, kwic=kwic)
-        conc_start = clean_text(conc_start, kwic=kwic)
-        conc_end = clean_text(conc_end, kwic=kwic)
-        if kwic:
-            conc_middle = clean_text(conc_middle, notag=False, kwic=kwic)
-            conc_text = (conc_start + conc_middle + conc_end).decode('utf-8', 'ignore')
-            conc_text = align_text(conc_text, 1)
-        else:
-            conc_text = (conc_start + conc_middle + conc_end).decode('utf-8', 'ignore')
+        conc_start, conc_middle, conc_end = chunkifier(conc_text, bytes, highlight=True)
+        conc_start = clean_text(conc_start)
+        conc_end = clean_text(conc_end)
+        conc_text = (conc_start + conc_middle + conc_end).decode('utf-8', 'ignore')
         text_snippet.append(conc_text)
-    if kwic:
-        text = '<br>\n'.join(text_snippet)
-    else:
-        text = '... '.join(text_snippet)
+    text = ' ... '.join(text_snippet)
     return text
     
      

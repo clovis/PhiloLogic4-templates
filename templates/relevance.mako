@@ -1,6 +1,4 @@
 <%include file="header.mako"/>
-<a href="javascript:void(0)" class="show_search_form" title="Click to show the search form">Search form</a>
-<a href="javascript:void(0)" class="close_search_box">X</a>
 <%include file="search_boxes.mako"/>
 <div class='philologic_response'>
   <div class='initial_report'>
@@ -9,7 +7,7 @@
      start, end, n = f.link.page_interval(results_per_page, results, q["start"], q["end"])
     %>
     Hits <span class="start">${start}</span> - <span class="end">${end}</span> of ${len(results)}
-   </p>
+    </p>
   </div>
 <%include file="show_frequency.mako"/>
  <div class="results_container">
@@ -26,14 +24,13 @@
    link_metadata['title'] = title.encode('utf-8', 'ignore')
    url = f.link.make_query_link(q["q"],q["method"],q["arg"],**link_metadata)
    hit_num = len(i.bytes)
-   if hit_num >= 3:
-       sample_num = 3
-   else:
-       sample_num = hit_num 
    %>
-   <span class='hit_n'>${n}.</span><a href='${url}'> ${title}, ${author}</a>: ${sample_num} of ${hit_num} occurences displayed
-   <span class="score">score: ${i.score}</span>
-   <div class='philologic_context'><span class="kwic_concordance">${fetch_relevance(i, path, q)}</span></div>
+   <span class='hit_n'>${n}.</span>
+   <a href='${url}' title="Click to retrieve all ${hit_num} occurences" class="tooltip_link"> ${title}, ${author}</a>
+   <span style="font-weight:700; padding-left:25px;">${hit_num} occurences</span>
+   <div class='philologic_context'>
+   <span class='philologic_context'>${fetch_relevance(i, path, q)}...</span>
+   </div>
    </li>
   % endfor
   </ol>

@@ -9,7 +9,7 @@
  <input type="radio" name="report" id="report5" value='frequency'><label for="report5">Frequency Table</label>
  <input type="radio" name="report" id="report6" value='time_series'><label for="report6">Time Series</label>
  </div>
- <div id="search_elements">
+ <div id="search_elements" class="search_elements">
  <table>
  <tr class="table_row" ><td class="first_column">Query Terms:</td><td class="second_column"><input type='text' name='q' id='q' class="search_box"></input>
  </td></tr>
@@ -22,10 +22,9 @@
  <input type='text' name='arg_phrase' id='arg_phrase' style="margin-left:11px !important;width:30px; text-align: center;"></input>
  <span style="padding-left:5px;">words</span>
  <br><input type="radio" name="method" id="method3" value='cooc'><label for="method3">In the same sentence</label>
-
  </span></td></tr>
 % for facet in db.locals["metadata_fields"]:
-    <tr id="metadata_field" class="table_row"><td class="first_column">${facet}:</td><td><input type='text' name='${facet}' id="${facet}" class="search_box"></input></td></tr>
+    <tr id="metadata_field" class="table_row"><td class="first_column">${facet.title()}:</td><td><input type='text' name='${facet}' id="${facet}" class="search_box"></input></td></tr>
 % endfor
  </table>
 <table> 
@@ -73,5 +72,7 @@
 </table>
 </div>
 </form>
-<div id="form_separation" class="form_separation"></div>
+<div id="form_separation" class="form_separation">
+<a href="javascript:void(0)" class="show_search_form" id="show_search_form" title="Click to show the search form">Show search parameters</a>
+</div>
 </div>

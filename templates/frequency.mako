@@ -1,11 +1,10 @@
 <%include file="header.mako"/>
-<a href="javascript:void(0)" class="show_search_form" title="Click to show the search form">Search form</a>
-<a href="javascript:void(0)" class="close_search_box">X</a>
 <%include file="search_boxes.mako"/>
 <div class="results_container">
 <div class='philologic_frequency_report'>
- <p class='status'>Frequency Table</p>
 <% field, counts = generate_frequency(results, q, db) %>
+<p class='description'>Frequency by ${field}</p>
+ <p class='status'></p>
 <table border="1" class="philologic_table">
   <tr><th class="table_header">${field}</th><th class="table_header">count</th></tr>
 % for k,v,url in counts:

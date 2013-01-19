@@ -1,6 +1,4 @@
 <%include file="header.mako"/>
-<a href="javascript:void(0)" class="show_search_form" title="Click to show the search form">Search form</a>
-<a href="javascript:void(0)" class="close_search_box">X</a>
 <%include file="search_boxes.mako"/>
 <div class='philologic_response'>
   <div class='initial_report'>
@@ -12,7 +10,7 @@
      	r_status += " Still working.  Refresh for a more accurate count of the results."
     %>
     Hits <span class="start">${start}</span> - <span class="end">${end}</span> of ${len(results)}${r_status}
-   </p>
+    </p>
   </div>
 <%include file="show_frequency.mako"/>
  <div class="results_container">

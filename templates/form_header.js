@@ -34,17 +34,18 @@ $(document).ready(function(){
     var db_path = window.location.hostname + pathname;
     var q_string = window.location.search.substr(1);
     
-    
-    $(".show_search_form").tooltip({ position: { my: "left+10 center", at: "right" } });
     $(".show_search_form").click(function() {
-        link = $(this).text()
-        $(".close_search_box").toggle()
-        $(".form_body").slideToggle()
+        var link = $(this).text()
+        if ($("#search_elements").css('display') == 'none') {
+            link = link.replace("Show", "Hide");
+            $(this).tooltip({content: "Click to hide the search form"},{ position: { my: "left+10 center", at: "right" } });
+        } else {
+            link = link.replace("Hide", "Show");
+            $(this).tooltip({content: "Click to show the search form"},{ position: { my: "left+10 center", at: "right" } });
+        }
+        $(this).text(link);
+        $("#search_elements").slideToggle()
     });
-    $(".close_search_box").click(function(){
-        $(this).toggle()
-        $(".form_body").slideToggle()
-    })
     
     monkeyPatchAutocomplete();    
     
@@ -90,7 +91,7 @@ $(document).ready(function(){
         var my_value = decodeURIComponent((key_value[1]+'').replace(/\+/g, '%20'));
         if (my_value) {
             if (key_value[0] == 'pagenum' || key_value[0] == 'report' || key_value[0] == 'field' || key_value[0] == 'word_num' || key_value[0] == 'method' || key_value[0] == 'year_interval') {
-                $('input[name=' + key_value[0] + '][value=' + my_value + ']').attr("checked", true);
+                $('input[name=' + key_value[0] + '][value=' + my_value + ']').attr("checked", true)
             }
             else if (my_value == 'relative') {
                 $('#' + key_value[0]).attr('checked', true);
@@ -101,12 +102,23 @@ $(document).ready(function(){
         }
     }
     
+    $("#report").buttonset();
     
+    $('.form_body').show();
     showHide($('input[name=report]:checked', '#search').val());
     
     $('#report').change(function() {
         var report = $('input[name=report]:checked', '#search').val();
+        var visible = new Boolean(1);
+        if ($("#search_elements").css('display') == "none") {
+            visible = Boolean(0);
+        }
         showHide(report);
+        if (visible) {
+            $("#search_elements").fadeIn('fast');
+        } else {
+            $("#search_elements").slideDown();
+        }
     });
     
     
@@ -149,21 +161,21 @@ $(document).ready(function(){
     $( "#button" )
             .button()
             .click(function( event ) {
-                $(".form_body").slideUp();
+                $("#search_elements").slideUp();
             });
     $("#reset").button();
-    $("#report, #page_num, #word_num, #field, #method, #year_interval, #time_series_buttons").buttonset()
+    $("#page_num, #word_num, #field, #method, #year_interval, #time_series_buttons").buttonset()
+    $(".show_search_form").tooltip({ position: { my: "left+10 center", at: "right" } });
+    $(".tooltip_link").tooltip({ position: { my: "left top+5", at: "left bottom", collision: "flipfit" } }, { track: true });
     
     
 });
 
 function showHide(value) {
     if (value == 'frequency') {
-        $("#search_elements").hide()
-        $("#collocation").hide()
-        $("#results_per_page, #time_series, #year_interval").hide()
-        $("#frequency, #method, #metadata_field").show()
-        $("#search_elements").fadeIn('fast')
+        $("#search_elements").hide();
+        $("#results_per_page, #collocation, #time_series, #year_interval").hide();
+        $("#frequency, #method, #metadata_field").show();
     }
     if (value == 'collocation') {
         $("#search_elements").hide()
@@ -171,21 +183,18 @@ function showHide(value) {
         $("#results_per_page").hide()
         $("#method, #time_series, #year_interval").hide()
         $("#collocation, #metadata_field").show()
-        $("#search_elements").fadeIn('fast')
     }
     if (value == 'concordance') {
         $("#search_elements").hide()
         $("#frequency").hide()
         $("#collocation, #time_series, #year_interval").hide()
         $("#results_per_page, #method, #metadata_field").show()
-        $("#search_elements").fadeIn('fast')
     }
     if (value == 'kwic') {
         $("#search_elements").hide()
         $("#frequency").hide()
         $("#collocation, #time_series, #year_interval").hide()
         $("#results_per_page, #method, #metadata_field").show()
-        $("#search_elements").fadeIn('fast')
     }
     if (value == 'relevance') {
         $("#search_elements").hide()
@@ -193,15 +202,11 @@ function showHide(value) {
         $("#collocation").hide()
         $("#method, #time_series, #year_interval").hide()
         $("#results_per_page, #metadata_field").show()
-        $("#search_elements").fadeIn('fast')
     }
     if (value == "time_series") {
-        $("#search_elements").hide()
-        $("#frequency").hide()
-        $("#collocation").hide()
-        $("#results_per_page, #metadata_field, #method").hide()
-        $("#time_series, #year_interval").show()
-        $("#search_elements").fadeIn('fast')
+        $("#search_elements").hide();
+        $("#results_per_page, #metadata_field, #method, #frequency, #collocation").hide();
+        $("#time_series, #year_interval").show();
     }
 }
 

@@ -14,8 +14,14 @@ def time_series(environ,start_response):
                            db=db,dbname=dbname,q=q,f=f, template_name='time_series.mako')
 
 def generate_frequency(q, db):
-    start = int(q['start_date'])
-    end = int(q['end_date'])
+    try:
+        start = int(q['start_date'])
+    except ValueError:
+        start = float("-inf")
+    try:
+        end = int(q['end_date'])
+    except ValueError:
+        end = float("inf")
     conn = db.dbh
     c = conn.cursor()
     query_words = q['q'].replace('|', ' ') ## Handle ORs from crapser
