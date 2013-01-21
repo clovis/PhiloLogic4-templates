@@ -1,6 +1,5 @@
 <%include file="header.mako"/>
 <%include file="search_boxes.mako"/>
-<div class="results_container">
 <div class='philologic_response'>
   <div class='initial_report'>
    <p class='description'>
@@ -14,6 +13,7 @@
     </p>
   </div>
 <%include file="show_frequency.mako"/>
+ <div class="results_container">
  <ol class='philologic_concordance'>
   % for i in results[start - 1:end]:
    <li class='philologic_occurrence'>
