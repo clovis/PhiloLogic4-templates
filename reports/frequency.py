@@ -5,6 +5,7 @@ sys.path.append('..')
 import functions as f
 from functions.wsgi_handler import wsgi_response
 from render_template import render_template
+from collections import defaultdict
 import json
 
 def frequency(environ,start_response):
@@ -31,17 +32,9 @@ def generate_frequency(results, q, db):
     field = q["field"]
     if field == None:
         field = 'title'
-    counts = {}
+    counts = defaultdict(int)
     for n in results:
-        # This loop is the place to modify metadata values for tabulation.
-        # All changes to key will be reflected in the generated search URL.
-        # Cosmetic changes that shouldn't show in results should be done below.
-        key = n[field]
-        # You could group date values by decade here, for example.
-        if key == '':
-            key = 'NULL' # NULL is a magic value for queries, don't change it recklessly.
-        if key not in counts:
-            counts[key] = 0
+        key = n[field] or "NULL" # NULL is a magic value for queries, don't change it recklessly.
         counts[key] += 1
 
     if q['rate'] == 'relative':
@@ -51,7 +44,7 @@ def generate_frequency(results, q, db):
             counts[key] = relative_frequency(field, key, count, db)
 
     table = []
-    for k,v in sorted(counts.iteritems(),key=lambda x: x[1], reverse=True):
+    for k,v in sorted(counts.iteritems(),key=lambda x: x[1], reverse=True)[:100]:
         # for each item in the table, we modify the query params to generate a link url.
         if k == "NULL":
             q["metadata"][field] = k # NULL is a magic boolean keyword, not a string value.

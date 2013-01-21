@@ -1,5 +1,4 @@
 <%include file="header.mako"/>
-<a href="javascript:void(0)" class="show_search_form">Show search form</a>
 <%include file="search_boxes.mako"/>
 <div class='philologic_response'>
   <div class='initial_report'>

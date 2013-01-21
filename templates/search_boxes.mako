@@ -76,3 +76,4 @@
 <a href="javascript:void(0)" class="show_search_form" id="show_search_form" title="Click to show the search form">Show search parameters</a>
 </div>
 </div>
+<div id="waiting" style="display:none;z-index:99;position:absolute;"><img src="http://pantagruel.ci.uchicago.edu/philo4/Frantext_clovis/js/ajax-loader.gif" alt="Loading..."/></div>

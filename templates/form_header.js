@@ -27,7 +27,6 @@ function autocomplete_metadata(metadata, field) {
 
 var fields = ${repr(db.locals['metadata_fields'])}
 
-
 $(document).ready(function(){
     
     var pathname = window.location.pathname.replace('dispatcher.py/', '');
@@ -115,7 +114,7 @@ $(document).ready(function(){
         }
         showHide(report);
         if (visible) {
-            $("#search_elements").fadeIn('fast');
+            $("#search_elements").fadeIn();
         } else {
             $("#search_elements").slideDown();
         }
@@ -161,7 +160,10 @@ $(document).ready(function(){
     $( "#button" )
             .button()
             .click(function( event ) {
-                $("#search_elements").slideUp();
+                $("#search_elements").slideUp(function() {
+                    var width = $(window).width() / 3;
+                    $("#waiting").css("margin-left", width).show();
+                });
             });
     $("#reset").button();
     $("#page_num, #word_num, #field, #method, #year_interval, #time_series_buttons").buttonset()
@@ -263,6 +265,4 @@ function hide_frequency() {
         "margin-right": "0px"},
         50);
 }
-
-
 </script>
