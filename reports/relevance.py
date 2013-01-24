@@ -61,10 +61,6 @@ def compute_idf(query_words, table, c, total_docs):
         idfs[word] = idf
     return idfs
 
-def regexp(expr, item):
-    reg = re.compile(r"%s" % expr, re.I)
-    return reg.search(item) is not None
-
 def retrieve_hits(q, db):
     object_types = ['doc', 'div1', 'div2', 'div3', 'para', 'sent', 'word']
     obj_types = db.locals['ranked_relevance_objects']
@@ -72,7 +68,6 @@ def retrieve_hits(q, db):
     
     ## Open cursors for sqlite tables
     conn = db.dbh
-    conn.create_function("REGEXP", 2, regexp) ## to use with metadata searches
     c = conn.cursor()
     philo_ids, total_docs = filter_hits(q, obj_types, c)
     
@@ -117,11 +112,23 @@ def retrieve_hits(q, db):
             
     ## Perform search on metadata
     for metadata in q['metadata']:
-        query = 'select * from metadata_relevance where %s REGEXP ?' % metadata
+        query = 'select * from metadata_relevance where %s like ?' % metadata
+        for i in range(9):
+            query += ' or %s like ?' % metadata
+        query += ' collate nocase'
         for word in query_words.split():
-            word = '[\"\'\?!,;:-]?%s[\"\'\?!,;:-]?[^\w]' % word
+            q_word = ['{0}'.format(word)]
+            q_word.append('% {0}'.format(word))
+            q_word.append('{0} %'.format(word))
+            q_word.append('%{0}'.format("'" + word))
+            q_word.append('%{0} %'.format("'" + word))
+            q_word.append('% {0},%'.format(word))
+            q_word.append('%{0},%'.format("'" + word))
+            q_word.append('{0},%'.format(word))
+            q_word.append('%{0}:%'.format("'" + word))
+            q_word.append('{0}:%'.format(word))
             try:
-                c.execute(query, (word,))
+                c.execute(query, q_word)
                 for i in c.fetchall():
                     philo_id = i['philo_id']
                     try:
