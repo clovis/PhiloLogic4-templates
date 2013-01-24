@@ -9,6 +9,7 @@ from functions.wsgi_handler import wsgi_response
 from render_template import render_template
 from functions.format import adjust_bytes, clean_text, chunkifier, tokenize_text
 from bibliography import bibliography
+from collections import defaultdict
 
 ## Precompiled regexes for performance
 left_truncate = re.compile ("^[^\s]* ")
@@ -44,9 +45,9 @@ def fetch_collocation(results, path, q, filter_words=100, full_report=True):
                 break
     
     ## start going though hits ##
-    left_collocates = {}
-    right_collocates = {}
-    all_collocates = {}
+    left_collocates = defaultdict(int)
+    right_collocates = defaultdict(int)
+    all_collocates = defaultdict(int)
     
     count = 0
     for hit in results:
@@ -57,24 +58,16 @@ def fetch_collocation(results, path, q, filter_words=100, full_report=True):
         
         left_words = tokenize(conc_left, filter_list, within_x_words, 'left')
         right_words = tokenize(conc_right, filter_list, within_x_words, 'right')
-    
+           
         for l_word in left_words:
             if l_word == q['q']:
                 continue
-            if l_word not in left_collocates:
-                left_collocates[l_word] = 0
             left_collocates[l_word] += 1
-            if l_word not in all_collocates:
-                all_collocates[l_word] = 0
             all_collocates[l_word] += 1 
 
         for r_word in right_words:
             if r_word == q['q']:
                 continue
-            if r_word not in right_collocates:
-                right_collocates[r_word] = 0
-            if r_word not in all_collocates:
-                all_collocates[r_word] = 0
             right_collocates[r_word] += 1
             all_collocates[r_word] += 1
 

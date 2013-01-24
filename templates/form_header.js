@@ -133,6 +133,7 @@ $(document).ready(function(){
         $("#report1").prop('checked', true).button("refresh");
         $("#pagenum1").prop('checked', true).button("refresh");
         showHide('concordance');
+        $("#search_elements").fadeIn();
     });
     
     //  This is to select the right option when clicking on the input box  

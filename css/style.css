@@ -246,7 +246,7 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
     border-top: solid;
     border-top-width: 1px;
     border-top-color: #ECECEC;
-    width: 685px;
+    width: 675px;
 }
 .kwic_concordance {
         font-family: 'Droid Sans Mono', sans-serif;
@@ -283,6 +283,7 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
 }
 .philologic_table {
     border-collapse:collapse;
+    width:960px;
 }
 .table_header {
     background-color: #ECECEC;
@@ -305,7 +306,7 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
         list-style-type: none;
 }
 .description {
-        font-size: 140%;
+    font-size: 140%;
 }
 .highlight {
         color: #EF4500;
@@ -413,16 +414,16 @@ ul.ui-autocomplete.ui-menu {
     color: #800000;
     font-weight: 600;
     padding-bottom: 20px;
-    width: 670px;
+    width: 660px;
     text-decoration: none !important;
 }
 
 .report {
-    width: 685px;
+    width: 675px;
     /*padding-bottom: 20px;*/
 }
 .form_separation {
-    width: 685px;
+    width: 675px;
     border-bottom-style: double;
     border-bottom-width: 5px;
     border-bottom-color: #ECECEC;

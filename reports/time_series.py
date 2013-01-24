@@ -39,7 +39,9 @@ def generate_frequency(q, db):
     for i in c.fetchall():
         count = int(i['token_count'])
         try:
-            if q["year_interval"] == "25":
+            if q["year_interval"] == "1":
+                date = int(i['date'])
+            elif q["year_interval"] == "25":
                 date = round_quarter(int(i["date"]))
             else:
                 date = round_decade(int(i["date"]))
