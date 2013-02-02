@@ -49,16 +49,37 @@ def generate_frequency(q, db):
             continue
         if not start <= date <= end :
             continue
-        date = str(date)
         if date not in counts:
             counts[date] = 0
             relative_counts[date] = 0
         counts[date] += count
         relative_counts[date] += int(i['word_count'])
-            
-    relative_counts = dict([(date, counts[date] / relative_counts[date] * 10000) for date in counts])
         
-    table = sorted(counts.iteritems(),key=lambda x: x[0], reverse=False)
+    current_date = False
+    interval = int(q['year_interval'])
+    new_counts = {}
+    new_relative_counts = {}
+    for d, c in sorted(counts.iteritems(), key=lambda x: x[0]):
+        if not current_date:
+            current_date = d
+            new_counts[str(d)] = c
+            new_relative_counts[str(d)] = relative_counts[d] 
+            continue
+        current_date += interval
+        if d != current_date:
+            while current_date < d:
+                print >> sys.stderr, current_date, d
+                new_counts[str(current_date)] = 0
+                new_relative_counts[str(current_date)] = 1
+                current_date += interval
+        new_counts[str(d)] = c
+        new_relative_counts[str(d)] = relative_counts[d]
+                
+        
+            
+    relative_counts = dict([(date, new_counts[date] / new_relative_counts[date] * 10000) for date in new_counts])
+        
+    table = sorted(new_counts.iteritems(),key=lambda x: x[0], reverse=False)
     relative_table = sorted(relative_counts.iteritems(),key=lambda x: x[0], reverse=False)
     
     table.insert(0, ('Date', 'Count'))
