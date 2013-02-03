@@ -13,6 +13,7 @@ from functions.format import adjust_bytes, chunkifier, clean_text, align_text
 from bibliography import bibliography
 import re
 from render_template import render_template
+import subprocess
 
 
 def relevance(environ,start_response):
@@ -78,10 +79,7 @@ def retrieve_hits(q, db):
     
     ## Perform search on the text
     c.execute('select * from %s limit 1' % table)
-    fields = ['%s.' % table + i[0] for i in c.description]
-    c.execute('select * from toms limit 1')
-    extra_fields = ['toms.' + i[0] for i in c.description if '%s.%s' % (table, i[0]) not in fields]
-    fields.extend(extra_fields)
+    fields = ['%s.' % table + i[0] for i in c.description] + ['toms.word_count']
     if len(query_words.split()) > 1:
         query = 'select %s from %s inner join toms on toms.philo_id=%s.philo_id and toms.philo_name!="__philo_virtual" where ' % (','.join(fields), table, table)
         words =  query_words.split()
@@ -107,36 +105,30 @@ def retrieve_hits(q, db):
                 results[philo_id]['obj_type'] = object_types[philo_id.split().index('0') - 1]
                 results[philo_id]['bytes'] = []
                 results[philo_id]['tf_idf'] = 0
-            results[philo_id]['tf_idf'] += tf_idf #* boost
+            results[philo_id]['tf_idf'] += tf_idf
             results[philo_id]['bytes'].extend(bytes.split())
             
     ## Perform search on metadata
-    for metadata in q['metadata']:
-        query = 'select * from metadata_relevance where %s like ?' % metadata
-        for i in range(9):
-            query += ' or %s like ?' % metadata
-        query += ' collate nocase'
-        for word in query_words.split():
-            q_word = ['{0}'.format(word)]
-            q_word.append('% {0}'.format(word))
-            q_word.append('{0} %'.format(word))
-            q_word.append('%{0}'.format("'" + word))
-            q_word.append('%{0} %'.format("'" + word))
-            q_word.append('% {0},%'.format(word))
-            q_word.append('%{0},%'.format("'" + word))
-            q_word.append('{0},%'.format(word))
-            q_word.append('%{0}:%'.format("'" + word))
-            q_word.append('{0}:%'.format(word))
+    word_char = re.compile('\W')
+    my_words = '|'.join(set(["%s" % word_char.sub('',q_word) for q_word in query_words.split()]))
+    word_reg = re.compile(r"\b%s\b" % my_words)
+    metadata = ','.join([m for m in q['metadata']])
+    query = 'select philo_id, %s from metadata_relevance' % metadata
+    metadata_list = [i for i in c.execute(query)]
+    for i in metadata_list:
+        metadata_string = ' '.join([i[m] or '' for m in q['metadata']]).lower()
+        matches = word_reg.findall(metadata_string)
+        if matches:
+            philo_id = i['philo_id']
             try:
-                c.execute(query, q_word)
-                for i in c.fetchall():
-                    philo_id = i['philo_id']
-                    try:
-                        results[philo_id]['tf_idf'] *= 10
-                    except IndexError:
-                        results[philo_id]['tf_idf'] = idfs[word] * 10
-            except sqlite3.OperationalError:
-                pass
+                results[philo_id]['tf_idf'] *= 10 * len(matches)
+            except KeyError:
+                results[philo_id] = {}
+                results[philo_id]['bytes'] = []
+                results[philo_id]['tf_idf'] = 0
+                for match in matches:
+                    results[philo_id]['tf_idf'] += idfs[match] * 10
+
     
     hits = sorted(results.iteritems(), key=lambda x: x[1]['tf_idf'], reverse=True)
     return f.IRHitWrapper.ir_results_wrapper(hits, db)
