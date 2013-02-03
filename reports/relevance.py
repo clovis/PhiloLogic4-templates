@@ -117,7 +117,7 @@ def retrieve_hits(q, db):
     metadata_list = [i for i in c.execute(query)]
     for i in metadata_list:
         metadata_string = ' '.join([i[m] or '' for m in q['metadata']]).lower()
-        matches = word_reg.findall(metadata_string)
+        matches = word_reg.findall(metadata_string, re.UNICODE)
         if matches:
             philo_id = i['philo_id']
             try:
