@@ -11,20 +11,20 @@
  </div>
  <div id="search_elements" class="search_elements">
  <table>
- <tr class="table_row" ><td class="first_column">Query Terms:</td><td class="second_column"><input type='text' name='q' id='q' class="search_box"></input>
+ <tr class="table_row" ><td class="first_column">Query Terms:</td><td class="second_column"><input type='text' name='q' id='q' class="search_box">
  </td></tr>
  <tr><td></td>
  <td><span id='method'>
  <input type="radio" name="method" id="method1" value='proxy' checked="checked"><label for="method1">Within</label>
- <input type='text' name='arg_proxy' id='arg_proxy' style="margin-left:15px !important;width:30px; text-align: center;"></input>
+ <input type='text' name='arg_proxy' id='arg_proxy' style="margin-left:15px !important;width:30px; text-align: center;">
  <span style="padding-left:5px;">words</span>
  <br><input type="radio" name="method" id="method2" value='phrase'><label for="method2">Exactly</label>
- <input type='text' name='arg_phrase' id='arg_phrase' style="margin-left:11px !important;width:30px; text-align: center;"></input>
+ <input type='text' name='arg_phrase' id='arg_phrase' style="margin-left:11px !important;width:30px; text-align: center;">
  <span style="padding-left:5px;">words</span>
  <br><input type="radio" name="method" id="method3" value='cooc'><label for="method3">In the same sentence</label>
  </span></td></tr>
 % for facet in db.locals["metadata_fields"]:
-    <tr id="metadata_field" class="table_row"><td class="first_column">${facet.title()}:</td><td><input type='text' name='${facet}' id="${facet}" class="search_box"></input></td></tr>
+    <tr id="metadata_field" class="table_row"><td class="first_column">${facet.title()}:</td><td><input type='text' name='${facet}' id="${facet}" class="search_box"></td></tr>
 % endfor
  </table>
 <table> 
@@ -55,7 +55,7 @@
 </td></tr>
 
 <tr class="table_row" id="time_series">
-<td class="first_column">Dates:</td><td>from <input type='text' name="start_date" id="start_date" style="width:35px;"</input> to <input type='text' name="end_date" id="end_date" style="width:35px;"</input>
+<td class="first_column">Dates:</td><td>from <input type='text' name="start_date" id="start_date" style="width:35px;"> to <input type='text' name="end_date" id="end_date" style="width:35px;">
 <tr class="table_row" id="year_interval"><td class="first_column">Year interval:</td><td><span id="year_interval">
 <input type="radio" name="year_interval" id="year0" value="1" checked="checked"><label for="year0">every year</label>
 <input type="radio" name="year_interval" id="year1" value="10" checked="checked"><label for="year1">every 10 years</label>

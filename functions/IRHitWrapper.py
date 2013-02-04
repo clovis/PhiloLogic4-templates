@@ -9,15 +9,17 @@ obj_dict = {'doc': 1, 'div1': 2, 'div2': 3, 'div3': 4,
 
 class ir_hit_wrapper(object):
     
-    def __init__(self, db,hit, bytes, score, obj_type=False, encoding='utf-8'):
+    def __init__(self, db,hit, bytes, score, encoding='utf-8'):
         self.db = db.dbh.cursor()
         self.toms_table = set(db.locals["metadata_fields"] + ['word_count', 'filename'])
         self.hit = hit
         self.philo_id = hit.split()
         self.bytes = [int(byte) for byte in bytes]
-        self.type = obj_type
         self.encoding = encoding
         self.score = score
+    
+    def type(self):
+        return self.db.locals['metadata_relevance_objects']
         
     def __getitem__(self, key):
         return self.__metadata_lookup(key)
@@ -35,7 +37,6 @@ class ir_hit_wrapper(object):
             else:
                 table = "ranked_relevance"
             query = 'select %s from %s where philo_id=? limit 1' % (field, table)
-            print >> sys.stderr, query, self.hit
             self.db.execute(query, (self.hit, ))
             metadata = self.db.fetchone()[0]
         except (TypeError,IndexError):
@@ -63,11 +64,11 @@ class ir_results_wrapper(object):
     def __getitem__(self,n):
         if isinstance(n,slice):
             hits = self.sqlhits[n]
-            return [ir_hit_wrapper(self.db,philo_id, hit['bytes'], hit['tf_idf'], obj_type=hit['obj_type']) for philo_id, hit in hits]
+            return [ir_hit_wrapper(self.db,philo_id, hit['bytes'], hit['tf_idf']) for philo_id, hit in hits]
     
     def __iter__(self):
         for philo_id, hit in self.sqlhits:
-            yield ir_hit_wrapper(self.db,philo_id, hit['bytes'], hit['tf_idf'], obj_type=hit['obj_type'])
+            yield ir_hit_wrapper(self.db,philo_id, hit['bytes'], hit['tf_idf'])
         
     def __len__(self):
         return len(self.sqlhits)

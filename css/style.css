@@ -191,7 +191,7 @@ span.opener   {display: block; text-align: center;}
 span.label   {display: block; text-align: center;}
 span.signed   {display: block; text-align: right;}
 span.stage    {display: block; text-align: right; font-style: italic; margin-left: 120px;}
-span.speaker  {display: block; text-align: center; FONT-SIZE: 16;}
+span.speaker  {display: block; text-align: center; FONT-SIZE: 16px;}
 span.epigraph {display: block; margin-left: 300px;}
 span.salute   {display: block; text-align: center;}
 span.trailer  {display: block; text-align: center;}
@@ -218,12 +218,12 @@ span.mstonetype {display: block; text-align: center;}
 span.mwright {display: block; FONT-SIZE: 12px; text-align: right;}
 span.authfreqindt {display: block; text-align: left; margin-left: 60px;}
 span.perfreqindt {display: block; text-align: left; margin-left: 45px;}
-span.navhead {display: block; text-align: center; font-size: 16; font-weight: bold;}
-span.navbiblio {display: block; font-size: 14;}
-span.navlevel1 {display: block; text-align: left; font-size: 14;}
-span.navlevel2 {display: block; text-align: left; margin-left: 40px; FONT-SIZE: 14;}
-span.navlevel3 {display: block; text-align: left; margin-left: 60px; FONT-SIZE: 12;}
-span.projecthead { text-align: right; font-size: 20; color: #000000;}
+span.navhead {display: block; text-align: center; font-size: 16px; font-weight: bold;}
+span.navbiblio {display: block; font-size: 14px;}
+span.navlevel1 {display: block; text-align: left; font-size: 14px;}
+span.navlevel2 {display: block; text-align: left; margin-left: 40px; FONT-SIZE: 14px;}
+span.navlevel3 {display: block; text-align: left; margin-left: 60px; FONT-SIZE: 12px;}
+span.projecthead { text-align: right; font-size: 20px; color: #000000;}
 
 
 /* For pop-in notes */
@@ -236,21 +236,12 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
 }
 
 /* New Philo4 styles */
-.form_body {
-    padding-top: 10px;
-    width: 960px;
-    display: none;
-}
-.search_elements {
-    margin-top: 20px;
-    border-top: solid;
-    border-top-width: 1px;
-    border-top-color: #ECECEC;
-    width: 675px;
-}
+
+
+/*Results formatting*/
 .kwic_concordance {
         font-family: 'Droid Sans Mono', sans-serif;
-        font-size: 12;
+        font-size: 12px;
 }
 .kwic_biblio {
     font-weight:400 !important;
@@ -272,6 +263,18 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
 .philologic_collocation {
     padding-right: 50px;
 }
+.more_context {
+    padding-left: 24px;
+    color: Gray !important;
+    font-weight: 300 !important;
+}
+.collocate {
+    color:#1E90FF;
+    font-weight:400;
+}
+
+
+/*Tables*/
 .table_row {
     height: 50px !important;
 }
@@ -302,47 +305,14 @@ span.projecthead { text-align: right; font-size: 20; color: #000000;}
     border-width:1px;
     border-color: LightGray;
 }
-.bibliographic_results {
-        list-style-type: none;
-}
-.description {
-    font-size: 140%;
-}
-.highlight {
-        color: #EF4500;
-        font-weight: 400;
-}
-.more {
-        font-size: 130%;
-        margin-left: auto;
-        margin-right: auto;
-        width:8%;
-}
-
-.more .previous {
-    float:left;
-    }
-
-.more .next {
-    float: right;
-    }
-
-.separation {
-        width:40%;
-        text-align:left;
-        margin-left:20;
-        color: #000000;
-        background-color: #000000;
-        height: 1px;
-}
-.bibliography {
-        padding-bottom: 10px;
+.frequency_table {
+        padding-top: 10px;
 }
 
 
 /*All the sidebar classes*/
 a.hide_frequency {
-    font-family: 'Droid Sans Mono' sans-serif !important;
+    font-family: 'Droid Sans Mono', sans-serif !important;
     float: right;
     padding-right: 20px;
     padding-left: 20px;
@@ -357,40 +327,50 @@ a.hide_frequency:hover {
         padding-right: 20px;
         margin-top: -40px;
 }
-
 .sidebar_display .freq_sidebar_status{
 	margin: 0em 0em 0.5em 0em;
 }
 
 
-.frequency_table {
-        padding-top: 10px;
+/*Search form*/
+.form_body {
+    padding-top: 10px;
+    margin-right: 20px;
+    width: auto;
+    display: none;
+}
+.search_elements {
+    margin-top: 20px;
+    border-top: solid;
+    border-top-width: 1px;
+    border-top-color: #ECECEC;
+    width: inherit;
+}
+.search_box {
+    width: 200px;
+}
+.show_search_form {
+    font-size: 100%;
+    color: #800000;
+    font-weight: 600;
+    padding-bottom: 20px;
+    width: inherit;
+    text-decoration: none !important;
+}
+.report {
+    width: auto;
+    max-width: 960px;
+}
+.form_separation {
+    margin-top: 20px;
+    width: inherit;
+    border-bottom-style: double;
+    border-bottom-width: 5px;
+    border-bottom-color: #ECECEC;
 }
 
 
-
-.score {
-        color: Black;
-        float: right;
-}
-.loading {
-    margin-left: auto;
-    margin-right: auto;
-    width: 30%;
-}
-.more_context {
-    padding-left: 24px;
-    color: Gray !important;
-    font-weight: 300 !important;
-}
-.collocate {
-    color:#1E90FF;
-    font-weight:400;
-}
-.current_page {
-    font-size: 170%;
-}
-
+/*jQueryUI styling*/
 .ui-button,  .ui-button-text .ui-button {  
     font-size: inherit !important;
     font-family: inherit !important;
@@ -401,30 +381,54 @@ ul.ui-autocomplete.ui-menu {
     font-family: inherit !important;
 }
 .ui-tooltip {
-    font-size: 13 !important;
+    font-size: 12px !important;
     font-family: inherit !important;
 }
 
-.search_box {
-    width: 200px;
+
+/*Pages links*/
+.more {
+        font-size: 130%;
+        margin-left: auto;
+        margin-right: auto;
+        width:8%;
+}
+.more .previous {
+    float:left;
+}
+.more .next {
+    float: right;
 }
 
-.show_search_form {
-    font-size: 100%;
-    color: #800000;
-    font-weight: 600;
-    padding-bottom: 20px;
-    width: 660px;
-    text-decoration: none !important;
+
+/*Random stuff to be organized*/
+.bibliographic_results {
+        list-style-type: none;
+}
+.description {
+    font-size: 140%;
+}
+.highlight {
+        color: #EF4500;
+        font-weight: 400;
 }
 
-.report {
-    width: 675px;
-    /*padding-bottom: 20px;*/
+.separation {
+        width:40%;
+        text-align:left;
+        margin-left:20px;
+        color: #000000;
+        background-color: #000000;
+        height: 1px;
 }
-.form_separation {
-    width: 675px;
-    border-bottom-style: double;
-    border-bottom-width: 5px;
-    border-bottom-color: #ECECEC;
+.bibliography {
+        padding-bottom: 10px;
+}
+.loading {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+.current_page {
+    font-size: 170%;
 }

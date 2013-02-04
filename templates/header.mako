@@ -1,4 +1,5 @@
 ## -*- coding: utf-8 -*-
+<!doctype html>
 <html>
 <head>
   <title>${dbname}</title>
