@@ -125,6 +125,7 @@ def retrieve_hits(q, db):
                     results[philo_id]['tf_idf'] += idfs[match] * 1000  ## this may not give enough weight...
             else:
                 results[philo_id] = {}
+                results[philo_id]['obj_type'] = object_types[philo_id.split().index('0') - 1]
                 results[philo_id]['bytes'] = []
                 results[philo_id]['tf_idf'] = 0
                 for match in matches:
@@ -132,7 +133,7 @@ def retrieve_hits(q, db):
 
     
     hits = sorted(results.iteritems(), key=lambda x: x[1]['tf_idf'], reverse=True)
-    return f.IRHitWrapper.ir_results_wrapper(hits, db)
+    return ResultsWrapper(hits, db)
 
  
 def fetch_relevance(hit, path, q, samples=10):
@@ -151,4 +152,22 @@ def fetch_relevance(hit, path, q, samples=10):
     text = ' ... '.join(text_snippet)
     return text
     
-     
+  
+class ResultsWrapper(object):
+    
+    def __init__(self, sqlhits, db):
+        self.sqlhits = sqlhits
+        self.db = db
+        self.done = True
+    
+    def __getitem__(self,n):
+        if isinstance(n,slice):
+            hits = self.sqlhits[n]
+            return [f.IRHitWrapper.HitWrapper(philo_id.split(), self.db, hit['bytes'], hit['obj_type']) for philo_id, hit in hits]
+    
+    def __iter__(self):
+        for philo_id, hit in self.sqlhits:
+            yield f.IRHitWrapper.HitWrapper(philo_id.split(), self.db, hit['bytes'], hit['obj_type'])
+        
+    def __len__(self):
+        return len(self.sqlhits)  

@@ -1,74 +1,54 @@
 #!/usr/bin/env python
 
-import sqlite3
-import sys
 
 obj_dict = {'doc': 1, 'div1': 2, 'div2': 3, 'div3': 4, 
             'para': 5, 'sent': 6, 'word': 7}
-            
-
-class ir_hit_wrapper(object):
-    
-    def __init__(self, db,hit, bytes, score, encoding='utf-8'):
-        self.db = db.dbh.cursor()
-        self.toms_table = set(db.locals["metadata_fields"] + ['word_count', 'filename'])
-        self.hit = hit
-        self.philo_id = hit.split()
-        self.bytes = [int(byte) for byte in bytes]
-        self.encoding = encoding
-        self.score = score
-    
-    def type(self):
-        return self.db.locals['metadata_relevance_objects']
         
+
+class HitWrapper(object):
+
+    def __init__(self, hit, db, bytes, obj_type=False, encoding=None):
+        self.db = db
+        self.hit = hit
+        self.philo_id = hit
+        self.bytes = bytes
+        self.encoding = encoding
+        if obj_type:
+            self.type = obj_type
+        else:
+            try:
+                length = len(hit[:hit.index(0)])
+            except ValueError:
+                length = len(hit)
+            if length >= 7: length = 7
+            self.type = [k for k in obj_dict if obj_dict[k] == length][0]
+
     def __getitem__(self, key):
         return self.__metadata_lookup(key)
-        
+    
     def __getattr__(self, name):
         return self.__metadata_lookup(name)
         
     def __metadata_lookup(self, field):
+        width = 7
+        philo_id = self.philo_id[:width]
         metadata = None
-        if field == "filename":
-            self.hit = ' '.join(self.philo_id[:1]) + ' 0 0 0 0 0 0'
-        try:
-            if field in self.toms_table:
-                table = 'toms'
-            else:
-                table = "ranked_relevance"
-            query = 'select %s from %s where philo_id=? limit 1' % (field, table)
-            self.db.execute(query, (self.hit, ))
-            metadata = self.db.fetchone()[0]
-        except (TypeError,IndexError):
-            ## if self.db[self.philo_id[:width]] returns None]
-            metadata = ''
+        while width:
+            try:
+                metadata = self.db.get_id_lowlevel(philo_id[:width])[field]
+            except (TypeError,IndexError):
+                width -= 1
+                continue
+            if metadata != None:
+                break
+            width -= 1
         if metadata == None:
             metadata = ''
-        if self.encoding:
+        if self.db.encoding:
             try:
-                return metadata.decode(self.encoding, 'ignore')
+                return metadata.decode(self.db.encoding, 'ignore')
             except AttributeError:
                 ## if the metadata is an integer
                 return metadata
         else:
             return metadata
-        
-
-class ir_results_wrapper(object):
-    
-    def __init__(self, sqlhits, db):
-        self.sqlhits = sqlhits
-        self.db = db
-        self.done = True
-    
-    def __getitem__(self,n):
-        if isinstance(n,slice):
-            hits = self.sqlhits[n]
-            return [ir_hit_wrapper(self.db,philo_id, hit['bytes'], hit['tf_idf']) for philo_id, hit in hits]
-    
-    def __iter__(self):
-        for philo_id, hit in self.sqlhits:
-            yield ir_hit_wrapper(self.db,philo_id, hit['bytes'], hit['tf_idf'])
-        
-    def __len__(self):
-        return len(self.sqlhits)
