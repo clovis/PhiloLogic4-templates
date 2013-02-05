@@ -13,8 +13,12 @@
   Hits <span class="start">${start}</span> - <span class="end">${end}</span> of ${len(results)}${r_status}
   </p>
  </div>
+ <div id="report_switch">
+ <input type="radio" name="report_switch" id="concordance_switch" value="?${q['q_string'].replace('report=kwic', 'report=concordance')}"><label for="concordance_switch">View occurences with context</label>
+ <input type="radio" name="report_switch" id="kwic_switch" value="?${q['q_string'].replace('report=concordance', 'report=kwic')}" checked="checked"><label for="kwic_switch">View occurences line by line</label>
+  </div>
  <%include file="show_frequency.mako"/>
- <div class="results_container">
+ <div class="results_container" style="border-top-style:solid;border-top-width:1px;border-top-color: #CCCCCC;padding-top:10px;padding-bottom:10px;">
  <% current_pos = start %>
   % for i in kwic_results:
    <div class="kwic_concordance">

@@ -157,6 +157,13 @@ $(document).ready(function(){
         hide_frequency();
     });
     
+    
+    //  This is to switch views between concordance and KWIC
+    $("#report_switch").change(function() {
+        var switchto = $('input[name=report_switch]:checked').val();
+        document.location.href = switchto;
+    });
+    
     //  jQueryUI theming
     $( "#button" )
             .button()
@@ -167,7 +174,7 @@ $(document).ready(function(){
                 });
             });
     $("#reset").button();
-    $("#page_num, #word_num, #field, #method, #year_interval, #time_series_buttons").buttonset()
+    $("#page_num, #word_num, #field, #method, #year_interval, #time_series_buttons, #report_switch").buttonset()
     $(".show_search_form").tooltip({ position: { my: "left+10 center", at: "right" } });
     $(".tooltip_link").tooltip({ position: { my: "left top+5", at: "left bottom", collision: "flipfit" } }, { track: true });
     

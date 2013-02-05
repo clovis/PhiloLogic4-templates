@@ -99,7 +99,7 @@ def retrieve_hits(q, db):
         if not philo_ids or philo_id in philo_ids:
             total_word_count = int(word_count)
             term_frequency = token_counts/total_word_count
-            tf_idf = (1 + log(term_frequency)) * idfs[philo_name]
+            tf_idf = term_frequency * idfs[philo_name]
             if philo_id not in results:
                 results[philo_id] = {}
                 results[philo_id]['obj_type'] = object_types[philo_id.split().index('0') - 1]
@@ -122,17 +122,19 @@ def retrieve_hits(q, db):
             philo_id = i['philo_id']
             if philo_id in results:
                 for match in matches:
-                    results[philo_id]['tf_idf'] += idfs[match] * 1000  ## this may not give enough weight...
-            else:
+                    results[philo_id]['tf_idf'] += idfs[match] * 100
+            elif philo_id in philo_ids or not philo_ids:
                 results[philo_id] = {}
                 results[philo_id]['obj_type'] = object_types[philo_id.split().index('0') - 1]
                 results[philo_id]['bytes'] = []
                 results[philo_id]['tf_idf'] = 0
                 for match in matches:
-                    results[philo_id]['tf_idf'] += idfs[match] * 1000
-
+                    results[philo_id]['tf_idf'] += idfs[match] * 100
     
-    hits = sorted(results.iteritems(), key=lambda x: x[1]['tf_idf'], reverse=True)
+    if philo_ids:
+        hits = sorted(results.iteritems(), key=lambda x: x[1]['tf_idf'], reverse=False)  ## This is weird...
+    else:
+        hits = sorted(results.iteritems(), key=lambda x: x[1]['tf_idf'], reverse=True)
     return ResultsWrapper(hits, db)
 
  
