@@ -2,14 +2,14 @@
 <%include file="search_boxes.mako"/>
 <div class='philologic_response'>
   <div class='initial_report'>
+  <%include file="show_frequency.mako"/> 
    <p class='description'>
     <%
      start, end, n = f.link.page_interval(results_per_page, results, q["start"], q["end"])
     %>
     Hits <span class="start">${start}</span> - <span class="end">${end}</span> of ${len(results)}
-    </p>
+    </p> 
   </div>
-<%include file="show_frequency.mako"/>
  <div class="results_container">
  <ol class='philologic_concordance'>
   % for i in results[start - 1:end]:

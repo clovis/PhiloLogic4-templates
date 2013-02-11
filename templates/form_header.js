@@ -69,7 +69,7 @@ $(document).ready(function(){
     $(".kwic_biblio").hoverIntent(config)
 
     //  This will show more context in concordance searches
-    $(".more_context").click(function() {
+    $(document).on("click", ".more_context", function() {
         var context_link = $(this).text();
         if (context_link == 'More') {
             $(this).siblings('.philologic_context').children('.begin_concordance').show()
@@ -161,7 +161,12 @@ $(document).ready(function(){
     //  This is to switch views between concordance and KWIC
     $("#report_switch").change(function() {
         var switchto = $('input[name=report_switch]:checked').val();
-        document.location.href = switchto;
+        var width = $(window).width() / 3;
+        $("#waiting").css("margin-left", width).show();
+        $.get("http://" + db_path + "/reports/concordance_switcher.py" + switchto, function(data) {
+            $("#results_container").hide().empty().html(data).fadeIn('fast');
+            $("#waiting").hide();
+        });
     });
     
     //  jQueryUI theming
@@ -173,8 +178,8 @@ $(document).ready(function(){
                     $("#waiting").css("margin-left", width).show();
                 });
             });
-    $("#reset").button();
-    $("#page_num, #word_num, #field, #method, #year_interval, #time_series_buttons, #report_switch").buttonset()
+    $("#reset, #freq_sidebar").button();
+    $("#page_num, #word_num, #field, #method, #year_interval, #time_series_buttons, #report_switch, #frequency_field").buttonset()
     $(".show_search_form").tooltip({ position: { my: "left+10 center", at: "right" } });
     $(".tooltip_link").tooltip({ position: { my: "left top+5", at: "left bottom", collision: "flipfit" } }, { track: true });
     
@@ -246,21 +251,23 @@ function toggle_frequency(q_string, db_url, pathname) {
         $(".results_container").animate({
             "margin-right": "330px"},
             50);
-        $("#freq").empty();
-        $(".loading").append(spinner).show();
+        var width = $(".sidebar_display").width() / 2;
+        $(".loading").append(spinner).css("margin-left", width).css("margin-top", "10px").show();
         $.getJSON(script_call, function(data) {
+            var newlist = "";
             $(".loading").hide().empty();
-	    if (field == "collocate") {
-		$("#freq").append("<p class='freq_sidebar_status'>Collocates within 5 words left or right</p>");
-	    }
+            if (field == "collocate") {
+                newlist += "<p class='freq_sidebar_status'>Collocates within 5 words left or right</p>";
+            }
             $.each(data, function(index, item) {
                 if (item[0].length > 30) {
-                    var url = '<a href="' + item[2] + '">' + item[0].slice(0,30) + '[...]</a>'
+                    var url = '<a href="' + item[2] + '">' + item[0].slice(0,32) + '[...]</a>'
                 } else {
                     var url = '<a href="' + item[2] + '">' + item[0] + '</a>'
                 } 
-                $("#freq").append('<p><li>' + url + '<span style="float:right;padding-right:20px;">' + item[1] + '</span></li></p>');
+                newlist += '<p><li>' + url + '<span style="float:right;">' + item[1] + '</span></li></p>';
             });
+            $("#freq").hide().empty().html(newlist).fadeIn('fast');
         });
         $(".hide_frequency").show();
         $("#freq").show();
@@ -268,7 +275,8 @@ function toggle_frequency(q_string, db_url, pathname) {
 }
 function hide_frequency() {
     $(".hide_frequency").fadeOut();
-    $("#freq").hide();
+    $("#freq").empty().hide();
+    $(".loading").empty();
     $(".results_container").animate({
         "margin-right": "0px"},
         50);

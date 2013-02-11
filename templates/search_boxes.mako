@@ -2,12 +2,11 @@
 
 <form id="search" action="${db.locals['db_url'] + "/dispatcher.py/"}">
 <div id="report" class="report">
- <input type="radio" name="report" id="report1" value='concordance' checked="checked"><label for="report1">Concordance</label>
- <input type="radio" name="report" id="report2" value='relevance'><label for="report2">Ranked relevance</label>
- <input type="radio" name="report" id="report3" value='kwic'><label for="report3">KWIC</label>
+ <input type="radio" name="report" id="report1" value='concordance' checked="checked"><label for="report1">Concordance Report</label>
+ <input type="radio" name="report" id="report2" value='relevance'><label for="report2">Ranked Relevance Report</label>
  <input type="radio" name="report" id="report4" value='collocation'><label for="report4">Collocation Table</label>
  <input type="radio" name="report" id="report5" value='frequency'><label for="report5">Frequency Table</label>
- <input type="radio" name="report" id="report6" value='time_series'><label for="report6">Time Series</label>
+ <input type="radio" name="report" id="report6" value='time_series'><label for="report6">Time Series Report</label>
  </div>
  <div id="search_elements" class="search_elements">
  <table>

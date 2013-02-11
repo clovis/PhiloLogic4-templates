@@ -11,13 +11,13 @@
     %>
     Hits <span class="start">${start}</span> - <span class="end">${end}</span> of ${len(results)}${r_status}
     </p>
-  </div>
-  <div id="report_switch">
-  <input type="radio" name="report_switch" id="concordance_switch" value="?${q['q_string'].replace('report=kwic', 'report=concordance')}" checked="checked"><label for="concordance_switch">View occurences with context</label>
-  <input type="radio" name="report_switch" id="kwic_switch" value="?${q['q_string'].replace('report=concordance', 'report=kwic')}"><label for="kwic_switch">View occurences line by line</label>
-  </div>
 <%include file="show_frequency.mako"/>
- <div class="results_container">
+  <div id="report_switch" class="report_switch">
+  <input type="radio" name="report_switch" id="concordance_switch" value="?${q['q_string'].replace('report=kwic', 'report=concordance')}" checked="checked"><label for="concordance_switch">View occurences with context</label>
+  <input type="radio" name="report_switch" id="kwic_switch" value="?${q['q_string'].replace('report=concordance', 'report=kwic')}"><label for="kwic_switch">View occurences line by line (KWIC)</label>
+  </div>
+  </div>
+ <div id="results_container" class="results_container">
  <ol class='philologic_concordance'>
   % for i in results[start - 1:end]:
    <li class='philologic_occurrence'>
@@ -25,7 +25,7 @@
      n += 1
     %>
     <span class='hit_n'>${n}.</span> ${f.cite.make_div_cite(i)}
-    <a href="javascript:void(0)" class="more_context">More</a>
+    <a href="#" class="more_context">More</a>
     <div class='philologic_context'>${fetch_concordance(i, path, q)}</div>
    </li>
   % endfor

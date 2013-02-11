@@ -5,10 +5,10 @@
   <title>${dbname}</title>
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono|Averia+Serif+Libre:300,400,700,300italic,400italic,700italic&subset=latin,latin-ext,cyrillic-ext,greek-ext,greek,cyrillic' rel='stylesheet' type='text/css'>
-<link type="text/css" href="${db.locals['db_url']}/css/smoothness/jquery-ui-1.9.2.custom.css" rel="stylesheet" />
+<link type="text/css" href="${db.locals['db_url']}/css/smoothness/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
 <link rel="stylesheet" href="${db.locals['db_url']}/css/style.css" type="text/css" media="screen, projection">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js" type="text/javascript"></script>
-<script type="text/javascript" src="${db.locals['db_url']}/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="${db.locals['db_url']}/js/jquery-ui-1.10.0.custom.min.js"></script>
 <script type="text/javascript" src="${db.locals['db_url']}/js/jquery.hoverIntent.minified.js"></script>
 <%include file="form_header.js"/>
 </head>
